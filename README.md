@@ -45,5 +45,7 @@ docker exec -it feedflow-app php artisan db:seed
 | Entrer dans le conteneur      | `docker exec -it feedflow-app bash`                     |
 | Sortir du conteneur           | `exit`                                                  |
 | Exécuter une commande Artisan | `docker exec -it feedflow-app php artisan `             |
+| Exécuter tout les tests       | `./vendor/bin/phpunit`                                  |
+| Exécuter un test              | `./vendor/bin/phpunit --filter=StoreSurveyActionTest`   |
 
 **Important** : Vous pouvez entrer dans le conteneur pour saisir directement vos commandes artisan.
