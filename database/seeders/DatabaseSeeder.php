@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
         DB::table('survey_questions')->insert([
             'survey_id'   => $survey->id,
             'title'       => 'test',
-            'question_type' => 'checkbox',
+            'question_type' => 'text',
             'options'     => json_encode([
                 'question1' => 'vert',
                 'question2' => 'blue',

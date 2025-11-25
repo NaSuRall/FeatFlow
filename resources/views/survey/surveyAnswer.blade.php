@@ -16,41 +16,8 @@
                 <div>
                     <label>{{ $question->title }}</label>
                     <input type="hidden" name="survey_question_id" value="{{ $question->id }}">
-
-                    @if ($question->question_type === "radio")
-                        @php
-                            $options = json_decode($question->options, true) ?? [];
-                        @endphp
-
-                        @foreach ($options as $option)
-                            <div>
-                                <input 
-                                    type="radio" 
-                                    name="answers[{{ $question->id }}]" 
-                                    value="{{ $option }}"
-                                >
-                                {{ $option }}
-                            </div>
-                        @endforeach
-
-                    @elseif ($question->question_type === "checkbox")
-                        @php
-                            $options = json_decode($question->options, true) ?? [];
-                        @endphp
-
-                        @foreach ($options as $option)
-                            <div>
-                                <input 
-                                    type="checkbox" 
-                                    name="answers[{{ $question->id }}][]" 
-                                    value="{{ $option }}"
-                                >
-                                {{ $option }}
-                            </div>
-                        @endforeach
-                    @elseif ($question->question_type === "text")
+                    @if ($question->question_type === "text")
                         <input type="text" name="answers[{{ $question->id }}]">
-
                     @else()
                         <p>Pas de questions disponible</p>
                     @endif

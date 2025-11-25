@@ -16,7 +16,7 @@ class SurveyController extends Controller
        $dto = SurveyAnswerDTO::fromRequest($request);
        $articles = $action->execute($dto);
 
-        return response()->json($articles, 201);
+        return response()->json("Reponse Sauvegarder avec success !");
     }
 
     public function getForms(){
