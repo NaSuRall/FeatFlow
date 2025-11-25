@@ -8,7 +8,7 @@
     <div>
         <h2>{{ $form->question_text }}</h2>
 
-        <form method="POST" action="{{ route('survey.store') }}">
+        <form method="POST" action="{{ route('storeAnswer.store') }}">
             @csrf
             <input type="hidden" name="survey_id" value="{{ $form->id }}">
 
@@ -25,12 +25,12 @@
             @endforeach
             <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
 
-            
+
             <button type="submit">Submit</button>
         </form>
     </div>
 @endforeach
 
-   
+
 
 @endsection
