@@ -17,4 +17,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+Route::get('/survey', [App\Http\Controllers\SurveyController::class, 'getForms'])->name('survey.show');
+Route::post('/survey', [App\Http\Controllers\SurveyController::class, 'store'])->name('survey.store');
+
 require __DIR__.'/auth.php';

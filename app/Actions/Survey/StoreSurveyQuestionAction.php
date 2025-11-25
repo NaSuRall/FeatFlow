@@ -6,16 +6,18 @@ use Illuminate\Support\Facades\DB;
 
 final class StoreSurveyQuestionAction
 {
-    public function __construct() {}
+    public function __construct(
+
+        // ?
+    ) {}
 
     /**
      * Store a Survey
      * @param SurveyDTO $dto
      * @return array
      */
-    public function handle(SurveyDTO $dto): array
+    public function execute(SurveyDTO $dto): array
     {
-        return DB::transaction(function () use ($dto) {
-        });
+
     }
 }
