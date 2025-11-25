@@ -21,5 +21,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/survey', [SurveyController::class, 'index'])->name('survey.index');
 Route::post('/survey', [SurveyController::class, 'store'])->name('survey.store');
 Route::put('/survey/update/{survey}', [SurveyController::class, 'update'])->name('survey.update');
+Route::put('/survey/delete/{survey}', [SurveyController::class, 'delete'])->name('survey.delete');
 
 require __DIR__.'/auth.php';

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Survey\CloseSurveyAction;
 use App\Actions\Survey\StoreSurveyAction;
 use App\Actions\Survey\UpdateSurveyAction;
 use App\DTOs\SurveyDTO;
+use App\Http\Requests\Survey\DeleteSurveyRequest;
 use App\Http\Requests\Survey\StoreSurveyRequest;
 use App\Http\Requests\Survey\UpdateSurveyRequest;
 use App\Models\Survey;
@@ -25,14 +27,21 @@ class SurveyController extends Controller
             'data' => $data
         ], 202);
     }
-
-    public function update(UpdateSurveyRequest $request, UpdateSurveyAction $action, Survey $survey){
-        //policies
-        $dto = SurveyDTO::fromRequest($request);
+// UpdateSurveyRequest
+    public function update(UpdateSurveyRequest $request, UpdateSurveyAction $action, Survey $survey)
+    {
+        $dto = SurveyDTO::fromRequest($request, $survey);
         $data = $action->execute($dto, $survey);
-        return response()->json([
-            'message' => 'Success',
-            'data' => $data
-        ]);
+
+        return redirect()->route('survey.index')
+            ->with('success', 'Sondage mis à jour avec succès');
     }
+
+    public function delete(DeleteSurveyRequest $request, CloseSurveyAction $action, Survey $survey){
+
+        $dto = SurveyDTO::fromRequest($request, $survey);
+        $data = $action->execute($dto, $survey);
+        return redirect()->route('survey.index')->with('success', 'sondage supprimé avec succes');
+    }
+
 }

@@ -18,4 +18,8 @@ final class CloseSurveyAction
         return DB::transaction(function () use ($dto) {
         });
     }
+
+    public function execute(SurveyDTO $dto, $survey) Survey{
+        $survey->delete();
+    }
 }

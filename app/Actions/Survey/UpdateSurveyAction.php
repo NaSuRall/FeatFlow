@@ -21,11 +21,22 @@ final class UpdateSurveyAction
     }
 
     public function execute(SurveyDTO $dto, $survey): Survey{
-        $survey->title = $dto->title;
-        $survey->description = $dto->description;
-        $survey->start_date = $dto->start_date;
-        $survey->end_date = $dto->end_date;
-        $survey->is_anonymous = $dto->is_anonymous;
+        if ($dto->title !== null) {
+            $survey->title = $dto->title;
+        }
+        if ($dto->description !== null) {
+            $survey->description = $dto->description;
+        }
+        if ($dto->start_date !== null) {
+            $survey->start_date = $dto->start_date;
+        }
+        if ($dto->end_date !== null) {
+            $survey->end_date = $dto->end_date;
+        }
+        if ($dto->is_anonymous !== null) {
+            $survey->is_anonymous = $dto->is_anonymous;
+        }
+
         $survey->save();
         return $survey;
     }

@@ -22,12 +22,12 @@ class UpdateSurveyRequest extends FormRequest
     public function rules(): array
     {
     return [
-        'organization_id' => 'sometimes|integer',
-        'title' => 'sometimes|string|max:100|min:3',
-        'description' => 'sometimes|string|max:250|min:10',
-        'start_date' => 'sometimes|date',
-        'end_date' => 'sometimes|date',
-        'is_anonymous' => 'sometimes|boolean',
+        'organization_id' => 'nullable|integer',
+        'title' => 'nullable|string|max:100|min:3',
+        'description' => 'nullable|string|max:250|min:10',
+        'start_date' => 'nullable|date',
+        'end_date' => 'nullable|date',
+        'is_anonymous' => 'nullable|boolean',
     ];
     }
 }

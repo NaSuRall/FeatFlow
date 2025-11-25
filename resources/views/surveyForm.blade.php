@@ -33,10 +33,14 @@
             <label for="end_date">Modifier la date de fin</label>
             <input type="date" name="end_date" value="{{$survey->end_date}}">
             <label for="is-anonymous">Mettre le sondage en anonyme ?</label>
-            <input type="hidden" name="is_anonymous" value="0">
             <input type="checkbox" name="is_anonymous" value="1" {{ $survey->is_anonymous ? 'checked' : '' }}>
 
             <button type="submit" >Mettre a jour</button>
+            <form method="post" action="{{route('survey.delete', $survey)}}">
+                @csrf
+                @method('put')
+                <button type="submit">Supprimer</button>
+            </form>
         </form>
     @endforeach
 </x-app-layout>
