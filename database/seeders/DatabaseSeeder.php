@@ -9,7 +9,6 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\Survey;
-use App\Models\Organization;
 use App\Models\SurveyAnswer;
 use App\Models\SurveyQuestion;
 
@@ -34,8 +33,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // 2. Organization
-        $organization = Organization::create([
+        $organization = Organization::firstOrCreate([
             'name'       => 'Acme Corporation',
+            ],[
             'user_id'    => $user->id,
             'created_at' => now(),
             'updated_at' => now(),

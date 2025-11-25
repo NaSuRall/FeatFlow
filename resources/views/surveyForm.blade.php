@@ -1,4 +1,7 @@
-<x-app-layout>
+@extends('layouts.app')
+
+@section('content')
+
     @if(session('success'))
         <div style="color: green; padding: 10px; margin: 10px 0; border: 1px solid green;">
             {{ session('success') }}
@@ -28,7 +31,7 @@
         <div>
             <h3>Nom du sondage:{{ $survey->title }}</h3>
 
-            <form method="post" action="{{route('survey.update', $survey)}}" ">
+            <form method="post" action="{{route('survey.update', $survey)}}">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="survey_id" value="{{ $survey->id }}">
@@ -54,4 +57,5 @@
             </form>
         </div>
     @endforeach
-</x-app-layout>
+
+@endsection
