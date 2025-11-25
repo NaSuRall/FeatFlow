@@ -8,6 +8,7 @@ final class SurveyDTO
 {
     public function __construct(
         public string $organization_id,
+        public string $token,
         public int $user_id,
         public string $title,
         public string $description,
@@ -21,6 +22,7 @@ final class SurveyDTO
     {
         return new self(
            organization_id: $request -> organization_id,
+           token: $request -> token,   
            user_id: $request->user()->id,
            title: $request-> title,
            description: $request-> description,
