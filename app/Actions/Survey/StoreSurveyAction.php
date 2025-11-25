@@ -2,6 +2,7 @@
 namespace App\Actions\Survey;
 
 use App\DTOs\SurveyDTO;
+use App\Models\Survey;
 use Illuminate\Support\Facades\DB;
 
 final class StoreSurveyAction
@@ -17,5 +18,18 @@ final class StoreSurveyAction
     {
         return DB::transaction(function () use ($dto) {
         });
+    }
+
+    public function execute(SurveyDTO $dto): Survey{
+        $survey = Survey::create([
+            'organization_id' => $dto->organization_id,
+            'user_id' => $dto->user_id,
+            'title' => $dto->title,
+            'description' => $dto->description,
+            'start_date' => $dto->start_date,
+            'end_date' => $dto->end_date,
+            'is_anonymous' => $dto->is_anonymous,
+        ]);
+        return $survey;
     }
 }

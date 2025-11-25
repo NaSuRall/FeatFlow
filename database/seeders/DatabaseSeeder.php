@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Organization;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,11 +18,19 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::create([
-            'last_name'     => 'Doe',
-            'first_name'    => 'John',
-            'email'         => 'test@feedflow.local',
-            'password'      => bcrypt('password'),
+        User::firstOrCreate([
+            'email' => 'test@feedflow.local',
+        ],[
+            'last_name'  => 'Doe',
+            'first_name' => 'John',
+            'password'   => bcrypt('password'),
+        ]);
+
+
+        Organization::firstOrCreate([
+            'name' => 'testOrganization',
+        ],[
+            'user_id' => 1,
         ]);
     }
 }

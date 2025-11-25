@@ -11,7 +11,7 @@ class UpdateSurveyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,13 @@ class UpdateSurveyRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+    return [
+        'organization_id' => 'sometimes|integer',
+        'title' => 'sometimes|string|max:100|min:3',
+        'description' => 'sometimes|string|max:250|min:10',
+        'start_date' => 'sometimes|date',
+        'end_date' => 'sometimes|date',
+        'is_anonymous' => 'sometimes|boolean',
+    ];
     }
 }
