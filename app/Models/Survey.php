@@ -18,4 +18,14 @@ class Survey extends Model
     ];
     protected $casts = [
     ];
+
+    public function answers()
+    {
+        return $this->hasMany(SurveyAnswer::class, 'survey_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

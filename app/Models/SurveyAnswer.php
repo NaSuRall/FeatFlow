@@ -9,7 +9,7 @@ class SurveyAnswer extends Model
 {
     use HasFactory;
 
-    protected $table    = 'surveys';
+    protected $table    = 'survey_answers';
     public $timestamps  = true;
     protected $fillable = [
         'id', 'survey_id', 'survey_question_id', 'user_id',
@@ -18,4 +18,10 @@ class SurveyAnswer extends Model
     ];
     protected $casts = [
     ];
+
+    public function survey()
+    {
+        return $this->belongsTo(Survey::class, 'survey_id');    
+    }
+
 }
