@@ -37,11 +37,11 @@ class SurveyController extends Controller
             ->with('success', 'Sondage mis à jour avec succès');
     }
 
-    public function delete(DeleteSurveyRequest $request, CloseSurveyAction $action, Survey $survey){
-
-        $dto = SurveyDTO::fromRequest($request, $survey);
-        $data = $action->execute($dto, $survey);
-        return redirect()->route('survey.index')->with('success', 'sondage supprimé avec succes');
+    public function delete(DeleteSurveyRequest $request, Survey $survey, CloseSurveyAction $action)
+    {
+        $action->execute($survey);
+        return redirect()->route('survey.index')
+            ->with('success', 'Sondage supprimé avec succès');
     }
 
 }

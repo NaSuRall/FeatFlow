@@ -19,7 +19,7 @@ final class CloseSurveyAction
         });
     }
 
-    public function execute(SurveyDTO $dto, $survey) Survey{
-        $survey->delete();
+    public function execute($survey){
+        return $survey->delete();
     }
 }
