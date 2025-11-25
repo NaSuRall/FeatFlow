@@ -23,4 +23,8 @@ Route::post('/survey', [SurveyController::class, 'store'])->name('survey.store')
 Route::put('/survey/update/{survey}', [SurveyController::class, 'update'])->name('survey.update');
 Route::delete('/survey/delete/{survey}', [SurveyController::class, 'delete'])->name('survey.delete');
 
+
+Route::get('/survey', [App\Http\Controllers\SurveyController::class, 'getForms'])->name('survey.show');
+Route::post('/survey', [App\Http\Controllers\SurveyController::class, 'storeAnswer'])->name('survey.store');
+
 require __DIR__.'/auth.php';

@@ -15,13 +15,32 @@ class Survey extends Model
     public $timestamps  = true;
     protected $fillable = [
         'organization_id', 'user_id',
-        'title', 'description', 'start_date', 'end_date', 'is_anonymous',
+        'title', 'description', 'start_date', 'end_date', 'is_anonymous'
     ];
     protected $casts = [
     ];
 
-    public function organization(): HasOne
+   /* public function organization(): HasOne
     {
         return $this->hasOne(Organization::class, 'id', 'organization_id');
+    }*/
+
+
+    function organization()
+    {
+        return $this->belongsTo(Organization::class);
+    }
+    function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function questions()
+    {
+        return $this->hasMany(SurveyQuestion::class);
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(SurveyAnswer::class);
     }
 }
