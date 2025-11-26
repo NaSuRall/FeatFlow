@@ -4,14 +4,15 @@ namespace App\Http\Requests\Organization;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateOrganization extends FormRequest
+class DeleteOrganizationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+         $organization = $this->route('organization');
+        return $organization && $organization->user_id === $this->user()->id;
     }
 
     /**

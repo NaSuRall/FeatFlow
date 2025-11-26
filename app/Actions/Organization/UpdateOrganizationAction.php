@@ -6,8 +6,6 @@ use Illuminate\Support\Facades\DB;
 
 final class UpdateOrganizationAction
 {
-    public function __construct() {}
-
     /**
      * Update an organization
      * @param OrganizationDTO $dto
@@ -16,6 +14,14 @@ final class UpdateOrganizationAction
     public function handle(OrganizationDTO $dto): array
     {
         return DB::transaction(function () use ($dto) {
+            $dto->organization->update([
+                'name' => $dto->name,
+            ]);
+
+            return [
+                'message' => 'Organisation mise à jour !',
+                'organization' => $dto->organization,
+            ];
         });
     }
 }
