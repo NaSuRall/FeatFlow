@@ -20,12 +20,13 @@ use Illuminate\Support\Carbon;
 
 class SurveyController extends Controller
 {
-    //test
-
+    // Affiche les sondages appartenant à l'utilisateur connecté
     public function index(){
         $surveys = Survey::where('user_id', auth()->id())->get();
         return view('surveyForm', compact('surveys'));
     }
+
+    // Crée un sondage
     public function store(StoreSurveyRequest $request, StoreSurveyAction $survey){
         $dto = SurveyDTO::fromRequest($request);
         $data = $survey->execute($dto);
@@ -36,7 +37,8 @@ class SurveyController extends Controller
         ->with('success', 'Sondage créé avec succès')
         ->with('public_link', $publicLink);
     }
-// UpdateSurveyRequest
+
+    // Met à jour un sondage
     public function update(UpdateSurveyRequest $request, UpdateSurveyAction $action, Survey $survey)
     {
         $dto = SurveyDTO::fromRequest($request, $survey);
@@ -46,6 +48,7 @@ class SurveyController extends Controller
             ->with('success', 'Sondage mis à jour avec succès');
     }
 
+    // Supprime un sondage
     public function delete(DeleteSurveyRequest $request, Survey $survey, CloseSurveyAction $action)
     {
         $action->execute($survey);
@@ -54,6 +57,7 @@ class SurveyController extends Controller
     }
 
 
+    // Enregistre une réponse
     public function storeAnswer(Request $request, StoreSurveyAnswerAction $action)
     {
        $dto = SurveyAnswerDTO::fromRequest($request);
@@ -62,17 +66,20 @@ class SurveyController extends Controller
         return response()->json("Reponse Sauvegarder avec success !");
     }
 
+    // Affiche tout les sondages
     public function getForms(){
 
         $forms = Survey::with('questions')->get();
         return view('survey.surveyAnswer', compact('forms'));
     }
 
+    // Affiche le formulaire pour ajouter des questions
     public function indexQuestions($survey_id){
         $survey = Survey::where('user_id', auth()->id())->get();
         return view('questionForm', compact('survey', 'survey_id'));
     }
 
+    // ajouter une question
     public function storeQuestion(Request $request, StoreSurveyQuestionAction $action){
         $dto = SurveyQuestionDTO::fromRequest($request);
         $data = $action->execute($dto);
@@ -80,6 +87,7 @@ class SurveyController extends Controller
         return view('questionForm');
     }
 
+    // Fonction pour afficher un sondage quand on utilise le token (pour partager le sondage)
     public function show(string $token)
     {
         $survey = Survey::where('token', $token)->firstOrFail();

@@ -21,6 +21,7 @@ final class MemberDTO
         $this->role = $role;
     }
 
+    // Ajouter un membre
     public static function fromAddRequest(AddMemberRequest $request, Organization $organization): self
     {
         return new self(
@@ -30,6 +31,7 @@ final class MemberDTO
         );
     }
 
+    // Supprimer un membre
     public static function fromDeleteRequest(DeleteMemberRequest $request, Organization $organization): self
     {
         return new self(
@@ -39,6 +41,7 @@ final class MemberDTO
         );
     }
 
+    // Donne le rôle admin au propriétaire de l'organisation
     public static function forOwner(Organization $organization, int $userId): self
     {
         return new self(
