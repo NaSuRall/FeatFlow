@@ -59,10 +59,10 @@
                                                     </button>
                                                 </form>
 
-                                                <button class="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400 openOrgBtn"
+                                                <a href="/survey/{{ $organization->id }}" class="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400 openOrgBtn"
                                                         data-name="{{ $organization->name }}" data-id="{{ $organization->id }}">
                                                     Ouvrir
-                                                </button>
+                                                </a>
 
                                                 <button class="bg-gray-300 px-3 py-1 rounded hover:bg-gray-400 addMemberBtn"
                                                         data-name="{{ $organization->name }}" data-id="{{ $organization->id }}">

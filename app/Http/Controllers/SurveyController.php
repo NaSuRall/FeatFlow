@@ -21,14 +21,14 @@ class SurveyController extends Controller
 {
     //test
 
-    public function index(){
-        $surveys = Survey::where('user_id', auth()->id())->get();
-        return view('surveyForm', compact('surveys'));
+    public function index($organization_id){
+        $surveys = Survey::where('organization_id', $organization_id)->get();
+        return view('surveyForm', compact('surveys', 'organization_id'));
     }
-    public function store(StoreSurveyRequest $request, StoreSurveyAction $survey){
+    public function store(StoreSurveyRequest $request, StoreSurveyAction $survey,){
         $dto = SurveyDTO::fromRequest($request);
         $data = $survey->execute($dto);
-        return redirect()->route('survey.index', $data);
+        return redirect()->route('survey.index', $data->organization_id);
     }
 // UpdateSurveyRequest
     public function update(UpdateSurveyRequest $request, UpdateSurveyAction $action, Survey $survey)
@@ -36,15 +36,14 @@ class SurveyController extends Controller
         $dto = SurveyDTO::fromRequest($request, $survey);
         $data = $action->execute($dto, $survey);
 
-        return redirect()->route('survey.index')
+        return redirect()->route('survey.index', $data->organization_id)
             ->with('success', 'Sondage mis à jour avec succès');
     }
 
     public function delete(DeleteSurveyRequest $request, Survey $survey, CloseSurveyAction $action)
     {
         $action->execute($survey);
-        return redirect()->route('survey.index')
-            ->with('success', 'Sondage supprimé avec succès');
+        return redirect()->back();
     }
 
 

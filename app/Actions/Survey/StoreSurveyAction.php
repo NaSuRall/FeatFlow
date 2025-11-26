@@ -21,6 +21,7 @@ final class StoreSurveyAction
     }
 
     public function execute(SurveyDTO $dto): Survey{
+
         $survey = Survey::create([
             'organization_id' => $dto->organization_id,
             'user_id' => $dto->user_id,
@@ -30,6 +31,7 @@ final class StoreSurveyAction
             'end_date' => $dto->end_date,
             'is_anonymous' => $dto->is_anonymous,
         ]);
+
         return $survey;
     }
 }

@@ -12,6 +12,7 @@
     <form method="post" action="{{ route('survey.store') }}">
         @csrf
         <div>
+            <input type="hidden" name="organization_id" value="{{ $organization_id }}">
             <input type="text" placeholder="Entrer le titre du sondage" id="title" name="title">
             <input type="text" placeholder="Entrer la description" id="description" name="description">
             <label for="start_date">Entrez la date de début</label>
@@ -33,8 +34,8 @@
             <form method="post" action="{{route('survey.update', $survey)}}">
                 @csrf
                 @method('PUT')
+
                 <input type="hidden" name="survey_id" value="{{ $survey->id }}">
-                <input type="hidden" name="organization_id" value="1">
                 <input type="text" placeholder="{{$survey->title}}" id="title_{{$survey->id}}" name="title" value="{{$survey->title}}">
                 <input type="text" placeholder="{{$survey->description}}" id="description_{{$survey->id}}" name="description" value="{{$survey->description}}">
                 <label for="start_date_{{$survey->id}}">Modifier la date de début</label>
