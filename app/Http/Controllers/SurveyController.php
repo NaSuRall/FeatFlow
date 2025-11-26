@@ -17,6 +17,7 @@ use App\DTOs\SurveyAnswerDTO;
 
 class SurveyController extends Controller
 {
+    //test
 
     public function index(){
         $surveys = Survey::where('user_id', auth()->id())->get();
