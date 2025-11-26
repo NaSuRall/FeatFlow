@@ -11,6 +11,9 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset('vendor/bladewind/css/bladewind-ui.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('vendor/bladewind/css/animate.min.css') }}" rel="stylesheet">
+
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -32,28 +35,7 @@
         </div>
 
         <script src="{{ asset('js/app.js') }}"></script>
-        <script>
-            const selectType = document.getElementById('question_type');
-            const answersForm = document.getElementById('answers-form');
-            const radioOptions = document.getElementById('radio-options');
-            const checkboxOptions = document.getElementById('checkbox-options');
-            const textOption = document.getElementById('text-option');
+        <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
 
-            selectType.addEventListener('change', function() {
-                answersForm.style.display = 'block';
-
-                radioOptions.style.display = 'none';
-                checkboxOptions.style.display = 'none';
-                textOption.style.display = 'none';
-
-                if (this.value === 'radio') {
-                    radioOptions.style.display = 'block';
-                } else if (this.value === 'checkbox') {
-                    checkboxOptions.style.display = 'block';
-                } else if (this.value === 'text') {
-                    textOption.style.display = 'block';
-                }
-            });
-        </script>
     </body>
 </html>

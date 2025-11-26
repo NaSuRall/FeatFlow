@@ -10663,13 +10663,10 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 /* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
-/* harmony import */ var _dashboard_dashboard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dashboard/dashboard */ "./resources/js/dashboard/dashboard.js");
-/* harmony import */ var _dashboard_dashboard__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_dashboard_dashboard__WEBPACK_IMPORTED_MODULE_2__);
 
 
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"];
 alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"].start();
-
 
 /***/ }),
 
@@ -10685,50 +10682,6 @@ __webpack_require__.r(__webpack_exports__);
 
 window.axios = axios__WEBPACK_IMPORTED_MODULE_0__["default"];
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
-/***/ }),
-
-/***/ "./resources/js/dashboard/dashboard.js":
-/*!*********************************************!*\
-  !*** ./resources/js/dashboard/dashboard.js ***!
-  \*********************************************/
-/***/ (() => {
-
-// Modal organization
-var modal = document.getElementById('orgModal');
-var modalTitle = document.getElementById('orgModalTitle');
-var modalContent = document.getElementById('orgModalContent');
-var closeBtn = document.getElementById('closeOrgModal');
-console.log('Dashboard JS loaded');
-document.querySelectorAll('.openOrgBtn').forEach(function (btn) {
-  btn.addEventListener('click', function () {
-    var name = btn.dataset.name;
-    modalTitle.innerText = name;
-    modalContent.innerText = "Mettre les sondages ici";
-    modal.classList.remove('hidden');
-  });
-});
-closeBtn.addEventListener('click', function () {
-  modal.classList.add('hidden');
-});
-
-// Modal membre
-var memberModal = document.getElementById('memberModal');
-var memberTitle = document.getElementById('memberModalTitle');
-var closeMemberBtn = document.getElementById('closeMemberModal');
-var addMemberForm = document.getElementById('addMemberForm');
-document.querySelectorAll('.addMemberBtn').forEach(function (btn) {
-  btn.addEventListener('click', function () {
-    var orgName = btn.dataset.name;
-    var orgId = btn.dataset.id;
-    memberTitle.innerText = "Ajouter un membre à " + orgName;
-    addMemberForm.action = "/organizations/".concat(orgId, "/members");
-    memberModal.classList.remove('hidden');
-  });
-});
-closeMemberBtn.addEventListener('click', function () {
-  memberModal.classList.add('hidden');
-});
 
 /***/ })
 
@@ -10791,18 +10744,6 @@ closeMemberBtn.addEventListener('click', function () {
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
 /******/ 		};
 /******/ 	})();
 /******/ 	
