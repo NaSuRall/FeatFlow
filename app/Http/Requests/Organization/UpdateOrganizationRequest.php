@@ -4,14 +4,15 @@ namespace App\Http\Requests\Organization;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreOrganization extends FormRequest
+class UpdateOrganizationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        $organization = $this->route('organization');
+        return $organization && $organization->user_id === $this->user()->id;
     }
 
     /**
@@ -21,8 +22,12 @@ class StoreOrganization extends FormRequest
      */
     public function rules(): array
     {
+        $organizationId = $this->route('organization')->id;
+
         return [
-            //
+            'name' => 'required|string|max:255|unique:organizations,name,' . $organizationId,
         ];
     }
+
+
 }
