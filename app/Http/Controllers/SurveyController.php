@@ -9,6 +9,7 @@ use App\Actions\Survey\UpdateSurveyAction;
 use App\DTOs\SurveyDTO;
 use App\DTOs\SurveyQuestionDTO;
 use App\Http\Requests\Survey\DeleteSurveyRequest;
+use App\Http\Requests\Survey\StoreSurveyAnswerRequest;
 use App\Http\Requests\Survey\StoreSurveyRequest;
 use App\Http\Requests\Survey\UpdateSurveyRequest;
 use App\Models\Organization;
@@ -60,7 +61,7 @@ class SurveyController extends Controller
 
 
     // Enregistre une réponse
-    public function storeAnswer(Request $request, StoreSurveyAnswerAction $action)
+    public function storeAnswer(StoreSurveyAnswerRequest $request, StoreSurveyAnswerAction $action)
     {
        $dto = SurveyAnswerDTO::fromRequest($request);
        $articles = $action->execute($dto);
@@ -69,10 +70,16 @@ class SurveyController extends Controller
     }
 
     //
-    public function getForms(){
+    public function getForms($token)
+    {
+        // Récupérer le survey par token
+        $survey = Survey::where('token', $token)
+            ->with('questions')
+            ->firstOrFail();
 
-        $forms = Survey::with('questions')->get();
-        return view('survey.surveyAnswer', compact('forms'));
+        return view('survey.surveyAnswer', [
+            'surveys' => [$survey]
+        ]);
     }
 
     // Affiche le formulaire pour ajouter des questions

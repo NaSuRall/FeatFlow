@@ -36,6 +36,32 @@
 
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
+        <script>
+            const selectType = document.getElementById('question_type');
+            const answersForm = document.getElementById('answers-form');
+            const radioOptions = document.getElementById('radio-options');
+            const checkboxOptions = document.getElementById('checkbox-options');
+            const textOption = document.getElementById('text-option');
+
+            selectType.addEventListener('change', function() {
+                // afficher le bloc principal
+                answersForm.style.display = 'block';
+
+                // masquer tous les sous-formulaires
+                radioOptions.style.display = 'none';
+                checkboxOptions.style.display = 'none';
+                textOption.style.display = 'none';
+
+                // afficher celui qui correspond au choix
+                if (this.value === 'radio') {
+                    radioOptions.style.display = 'block';
+                } else if (this.value === 'checkbox') {
+                    checkboxOptions.style.display = 'block';
+                } else if (this.value === 'text') {
+                    textOption.style.display = 'block';
+                }
+            });
+        </script>
 
     </body>
 </html>

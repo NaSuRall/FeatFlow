@@ -17,8 +17,8 @@ final class SurveyAnswerDTO
     {
         return new self(
             survey_id: $request->input('survey_id'),
-            survey_question_id: $request->input('survey_question_id'),
             answers: $request->input('answers', []),
+            survey_question_id: $request->input('survey_question_id'),
             user_id: $request->input('user_id'),
         );
     }
