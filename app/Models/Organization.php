@@ -14,4 +14,11 @@ class Organization extends Model
     protected $fillable = [ 'id', 'name', 'user_id', 'created_at', 'updated_at' ];
     protected $casts = [
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'organization_user')
+                    ->withPivot('role')
+                    ->withTimestamps();
+    }
 }

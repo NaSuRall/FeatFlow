@@ -10,6 +10,7 @@ use App\Http\Requests\Organization\DeleteOrganizationRequest;
 use App\Actions\Organization\UpdateOrganizationAction;
 use App\Http\Requests\Organization\UpdateOrganizationRequest;  
 use App\Http\Requests\Organization\StoreOrganizationRequest;
+use App\Models\User;
 
 class OrganizationController extends Controller
 {
@@ -18,7 +19,9 @@ class OrganizationController extends Controller
     public function index()
     {
         $organizations = Organization::where('user_id', auth()->id())->get();
-        return view('dashboard', compact('organizations'));
+        $users = User::all();
+
+        return view('dashboard', compact('organizations', 'users'));
     }
 
     //Créer une organization

@@ -21,6 +21,12 @@ final class StoreOrganizationAction
                 'user_id' => $dto->userId,
             ]);
 
+            $organization->users()->attach($dto->userId, [
+                'role' => 'admin',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
             return [
                 'organization' => $organization,
                 'message' => 'Organisation créée !',

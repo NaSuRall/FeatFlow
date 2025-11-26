@@ -23,5 +23,20 @@ class DatabaseSeeder extends Seeder
             'email'         => 'test@feedflow.local',
             'password'      => bcrypt('password'),
         ]);
+
+        User::create([
+            'last_name'     => 'Jack',
+            'first_name'    => 'John',
+            'email'         => 'testtt@feedflowfddffd.lfdfdocal',
+            'password'      => bcrypt('password'),
+        ]);
+
+        User::create([
+            'last_name'     => 'Michael',
+            'first_name'    => 'Joly',
+            'email'         => 'testttt@feedflbcvbow.lofdhbnncal',
+            'password'      => bcrypt('password1'),
+        ]);
+
     }
 }
