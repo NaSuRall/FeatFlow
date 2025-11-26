@@ -17,11 +17,16 @@ Route::get('/dashboard', function () {
 Route::get('/dashboard', [OrganizationController::class, 'index'])
     ->middleware(['auth', 'verified'])->name('dashboard');
 
+
 Route::middleware('auth')->group(function () {
+
+
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    Route::get('/organization', [OrganizationController::class, 'index'])->name('organization.index');
     Route::get('/organizations/create', [OrganizationController::class, 'create'])->name('organizations.create');
     Route::post('/organizations', [OrganizationController::class, 'store'])->name('organizations.store');
     Route::delete('/organizations/{organization}', [OrganizationController::class, 'destroy'])->name('organizations.destroy')->middleware(['auth']);

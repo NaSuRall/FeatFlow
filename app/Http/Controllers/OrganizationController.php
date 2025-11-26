@@ -6,9 +6,9 @@ use App\Actions\Organization\StoreOrganizationAction;
 use App\DTOs\OrganizationDTO;
 use App\Models\Organization;
 use App\Actions\Organization\DeleteOrganizationAction;
-use App\Http\Requests\Organization\DeleteOrganizationRequest; 
+use App\Http\Requests\Organization\DeleteOrganizationRequest;
 use App\Actions\Organization\UpdateOrganizationAction;
-use App\Http\Requests\Organization\UpdateOrganizationRequest;  
+use App\Http\Requests\Organization\UpdateOrganizationRequest;
 use App\Http\Requests\Organization\StoreOrganizationRequest;
 use App\Models\User;
 
@@ -21,7 +21,7 @@ class OrganizationController extends Controller
         $organizations = Organization::where('user_id', auth()->id())->get();
         $users = User::all();
 
-        return view('dashboard', compact('organizations', 'users'));
+        return view('organization', compact('organizations', 'users'));
     }
 
     //Créer une organization
@@ -31,7 +31,7 @@ class OrganizationController extends Controller
 
         $organization = $action->handle($dto);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('organization.index');
     }
 
     //Supprimer une organization
@@ -41,7 +41,7 @@ class OrganizationController extends Controller
 
         $result = $action->handle($dto);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('organization.index');
     }
 
     //Mettre a jour une organization
@@ -51,6 +51,6 @@ class OrganizationController extends Controller
 
         $result = $action->handle($dto);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('organization.index');
     }
 }
