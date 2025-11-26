@@ -34,10 +34,10 @@
             <!-- Lien public du sondage -->
             @if($survey->token)
                 <p>Lien public :
-                    <a href="{{ url('/survey/'.$survey->token) }}" target="_blank">
-                        {{ url('/survey/'.$survey->token) }}
+                    <a href="{{ url('/survey/answer/'.$survey->token) }}" target="_blank">
+                        {{ url('/survey/answer/'.$survey->token) }}
                     </a>
-                    <button onclick="navigator.clipboard.writeText('{{ url('/survey/'.$survey->token) }}')">
+                    <button onclick="navigator.clipboard.writeText('{{ url('/survey/answer/'.$survey->token) }}')">
                         Copier le lien
                     </button>
                 </p>

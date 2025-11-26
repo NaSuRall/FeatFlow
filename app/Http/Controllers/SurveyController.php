@@ -30,13 +30,13 @@ class SurveyController extends Controller
         $surveys = Survey::where('organization_id' , session('organization_id'))->get();
         return view('surveyForm', compact('surveys'));
     }
-    public function store(StoreSurveyRequest $request, StoreSurveyAction $survey,){
+    public function store(StoreSurveyRequest $request, StoreSurveyAction $survey){
         $dto = SurveyDTO::fromRequest($request);
         $data = $survey->execute($dto);
 
-        $publicLink = url("/survey/{$data->token}");
+        $publicLink = url("/survey/answer/{$data->token}");
 
-        return redirect()->route('survey.index', $data->organization_id)
+        return redirect()->route('survey.index',session('organization_id'))
         ->with('success', 'Sondage créé avec succès')
         ->with('public_link', $publicLink);
     }
@@ -47,7 +47,7 @@ class SurveyController extends Controller
         $dto = SurveyDTO::fromRequest($request, $survey);
         $data = $action->execute($dto, $survey);
 
-        return redirect()->route('survey.index')
+        return redirect()->route('survey.index',session('organization_id'))
             ->with('success', 'Sondage mis à jour avec succès');
     }
 
@@ -68,7 +68,7 @@ class SurveyController extends Controller
         return response()->json("Reponse Sauvegarder avec success !");
     }
 
-    // Affiche tout les sondages
+    //
     public function getForms(){
 
         $forms = Survey::with('questions')->get();
@@ -99,7 +99,7 @@ class SurveyController extends Controller
             abort(403, 'Ce sondage n’est pas actif.');
         }
 
-        return view('survey.show', [
+        return view('survey.surveyAnswer', [
             'survey' => $survey
         ]);
     }

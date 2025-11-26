@@ -24,7 +24,7 @@ final class StoreSurveyAction
     public function execute(SurveyDTO $dto): Survey{
 
         $survey = Survey::create([
-            'organization_id' => 1,
+            'organization_id' => $dto->organization_id,
             'user_id' => $dto->user_id,
             'title' => $dto->title,
             'description' => $dto->description,

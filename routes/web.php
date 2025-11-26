@@ -44,11 +44,11 @@ Route::put('/survey/update/{survey}', [SurveyController::class, 'update'])->name
 Route::delete('/survey/delete/{survey}', [SurveyController::class, 'delete'])->name('survey.delete');
 
 // Route pour accéder à un sondage via son token
-Route::get('/survey/{token}', [SurveyController::class, 'show'])->name('survey.show');
+Route::get('/survey/answer/{token}', [SurveyController::class, 'show'])->name('survey.show');
 
 
 // Routes pour gérer les réponses aux sondages
-Route::get('/survey/answer', [App\Http\Controllers\SurveyController::class, 'getForms'])->name('storeAnswer.show');
+Route::get('/survey/answer/{token}', [App\Http\Controllers\SurveyController::class, 'getForms'])->name('storeAnswer.show');
 Route::post('/survey/answer', [App\Http\Controllers\SurveyController::class, 'storeAnswer'])->name('storeAnswer.store');
 
 // Routes pour gérer les questions d'un sondage
