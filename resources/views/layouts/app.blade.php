@@ -27,10 +27,33 @@
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                @yield('content')
             </main>
         </div>
 
         <script src="{{ asset('js/app.js') }}"></script>
+        <script>
+            const selectType = document.getElementById('question_type');
+            const answersForm = document.getElementById('answers-form');
+            const radioOptions = document.getElementById('radio-options');
+            const checkboxOptions = document.getElementById('checkbox-options');
+            const textOption = document.getElementById('text-option');
+
+            selectType.addEventListener('change', function() {
+                answersForm.style.display = 'block';
+
+                radioOptions.style.display = 'none';
+                checkboxOptions.style.display = 'none';
+                textOption.style.display = 'none';
+
+                if (this.value === 'radio') {
+                    radioOptions.style.display = 'block';
+                } else if (this.value === 'checkbox') {
+                    checkboxOptions.style.display = 'block';
+                } else if (this.value === 'text') {
+                    textOption.style.display = 'block';
+                }
+            });
+        </script>
     </body>
 </html>

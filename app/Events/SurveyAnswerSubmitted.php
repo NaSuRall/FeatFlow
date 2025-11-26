@@ -9,6 +9,9 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use App\Models\SurveyAnswer;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SurveyAnswerSubmittedMail;
 
 class SurveyAnswerSubmitted
 {
@@ -17,10 +20,11 @@ class SurveyAnswerSubmitted
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(SurveyAnswer $surveyAnswer)
     {
-        //
+        $this->surveyAnswer = $surveyAnswer;
     }
+
 
     /**
      * Get the channels the event should broadcast on.

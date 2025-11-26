@@ -2,33 +2,36 @@
 
 namespace App\DTOs;
 
+use App\Models\Survey;
 use Illuminate\Http\Request;
 
 final class SurveyDTO
 {
     public function __construct(
-        public string $organization_id,
-        public string $token,
-        public int $user_id,
-        public string $title,
-        public string $description,
-        public string $start_date,
-        public string $end_date,
-        public bool $is_anonymous,
+        public ?string $organization_id,
+        public ?string $token,
+        public ?int $user_id,
+        public ?string $title,
+        public ?string $description,
+        public ?string $start_date,
+        public ?string $end_date,
+        public ?bool $is_anonymous,
 
     ) {}
 
-    public static function fromRequest(Request $request): self
+    public static function fromRequest(Request $request, ?Survey $survey = null): self
     {
         return new self(
-           organization_id: $request -> organization_id,
-           token: $request -> token,   
-           user_id: $request->user()->id,
-           title: $request-> title,
-           description: $request-> description,
-           start_date: $request-> start_date,
-           end_date: $request-> end_start,
-           is_anonymous: $request -> is_anonymous
+            organization_id: $request -> organization_id,
+            token: $request -> token,   
+            user_id: $request->user()->id,
+            title: $request->input('title', $survey?->title),
+            description: $request->input('description', $survey?->description),
+            start_date: $request->input('start_date', $survey?->start_date),
+            end_date: $request->input('end_date', $survey?->end_date),
+            is_anonymous: $request->has('is_anonymous')
+                ? (bool) $request->input('is_anonymous')
+                : null
         );
     }
 }
