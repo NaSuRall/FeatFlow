@@ -27,8 +27,8 @@ class OrganizationController extends Controller
     //Créer une organization
     public function store(StoreOrganizationRequest $request, StoreOrganizationAction $action)
     {
-        $dto = OrganizationDTO::fromRequest($request);
 
+        $dto = OrganizationDTO::fromRequest($request);
         $organization = $action->handle($dto);
 
         return redirect()->route('organization.index');

@@ -44,8 +44,11 @@
                                     <p class="text-gray-500">Aucune organisation trouvée.</p>
                                 @else
                                     @foreach ($organizations as $organization)
+                                        @php
+                                            session()->put($organization->id)
+                                        @endphp
                                         <div class="p-3 border rounded mb-3 flex items-center justify-between">
-
+                                                <p>{{$organization->id}}</p>
                                             <div class="flex space-x-2">
                                                 <form action="{{ route('organizations.update', $organization->id) }}" method="POST" class="flex items-center space-x-2 flex-1">
                                                     @csrf

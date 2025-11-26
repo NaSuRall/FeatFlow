@@ -11,20 +11,24 @@ use App\DTOs\SurveyQuestionDTO;
 use App\Http\Requests\Survey\DeleteSurveyRequest;
 use App\Http\Requests\Survey\StoreSurveyRequest;
 use App\Http\Requests\Survey\UpdateSurveyRequest;
+use App\Models\Organization;
+use App\Models\Survey;
 use Illuminate\Http\Request;
 use App\Models\SurveyQuestion;
 use App\Actions\Survey\StoreSurveyAnswerAction;
 use App\DTOs\SurveyAnswerDTO;
-use App\Models\Survey;
 use Illuminate\Support\Carbon;
 
 class SurveyController extends Controller
 {
     //test
 
-    public function index($organization_id){
-        $surveys = Survey::where('organization_id', $organization_id)->get();
-        return view('surveyForm', compact('surveys', 'organization_id'));
+    public function index(Organization $organization){
+
+        session(['organization_id' => $organization->id]);
+
+        $surveys = Survey::where('organization_id' , session('organization_id'))->get();
+        return view('surveyForm', compact('surveys'));
     }
     public function store(StoreSurveyRequest $request, StoreSurveyAction $survey,){
         $dto = SurveyDTO::fromRequest($request);
@@ -43,7 +47,7 @@ class SurveyController extends Controller
         $dto = SurveyDTO::fromRequest($request, $survey);
         $data = $action->execute($dto, $survey);
 
-        return redirect()->route('survey.index', $data->organization_id)
+        return redirect()->route('survey.index')
             ->with('success', 'Sondage mis à jour avec succès');
     }
 
