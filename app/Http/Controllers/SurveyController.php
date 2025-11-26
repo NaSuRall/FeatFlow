@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Actions\Survey\CloseSurveyAction;
 use App\Actions\Survey\StoreSurveyAction;
+use App\Actions\Survey\StoreSurveyQuestionAction;
 use App\Actions\Survey\UpdateSurveyAction;
 use App\DTOs\SurveyDTO;
+use App\DTOs\SurveyQuestionDTO;
 use App\Http\Requests\Survey\DeleteSurveyRequest;
 use App\Http\Requests\Survey\StoreSurveyRequest;
 use App\Http\Requests\Survey\UpdateSurveyRequest;
@@ -60,5 +62,17 @@ class SurveyController extends Controller
 
         $forms = Survey::with('questions')->get();
         return view('survey.surveyAnswer', compact('forms'));
+    }
+
+    public function indexQuestions($survey_id){
+        $survey = Survey::where('user_id', auth()->id())->get();
+        return view('questionForm', compact('survey', 'survey_id'));
+    }
+
+    public function storeQuestion(Request $request, StoreSurveyQuestionAction $action){
+        $dto = SurveyQuestionDTO::fromRequest($request);
+        $data = $action->execute($dto);
+
+        return view('questionForm');
     }
 }
