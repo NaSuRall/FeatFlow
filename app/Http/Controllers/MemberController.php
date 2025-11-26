@@ -16,7 +16,7 @@ class MemberController extends Controller
         $dto = MemberDTO::fromAddRequest($request, $organization);
         $action->handle($dto);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('organization.index');
     }
 
     public function deleteMember(DeleteMemberRequest $request, Organization $organization, DeleteMemberAction $action)
@@ -24,6 +24,6 @@ class MemberController extends Controller
         $dto = MemberDTO::fromDeleteRequest($request, $organization);
         $action->handle($dto);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('organization.index');
     }
 }

@@ -13,7 +13,18 @@ use App\Http\Requests\Organization\StoreOrganizationRequest;
 use App\Models\User;
 
 class OrganizationController extends Controller
-{
+{    
+
+    // public function show($id)
+    // {
+    //     // Récupère l'organisation
+    //     $organization = Organization::findOrFail($id);
+
+    //     // Récupère uniquement les users dont la table pivot a organization_id = $organization->id
+    //     $users = $organization->users()->wherePivot('organization_id', $organization->id)->get();
+
+    //     return view('organization', compact('organization', 'users'));
+    // }
 
     //Afficher les organization du user
     public function index()

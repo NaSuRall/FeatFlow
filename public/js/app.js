@@ -10663,8 +10663,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 /* harmony import */ var alpinejs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! alpinejs */ "./node_modules/alpinejs/dist/module.esm.js");
-/* harmony import */ var _dashboard_dashboard__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dashboard/dashboard */ "./resources/js/dashboard/dashboard.js");
-/* harmony import */ var _dashboard_dashboard__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_dashboard_dashboard__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _organization_organization__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./organization/organization */ "./resources/js/organization/organization.js");
+/* harmony import */ var _organization_organization__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_organization_organization__WEBPACK_IMPORTED_MODULE_2__);
 
 
 window.Alpine = alpinejs__WEBPACK_IMPORTED_MODULE_1__["default"];
@@ -10688,10 +10688,10 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/dashboard/dashboard.js":
-/*!*********************************************!*\
-  !*** ./resources/js/dashboard/dashboard.js ***!
-  \*********************************************/
+/***/ "./resources/js/organization/organization.js":
+/*!***************************************************!*\
+  !*** ./resources/js/organization/organization.js ***!
+  \***************************************************/
 /***/ (() => {
 
 // Modal organization
@@ -10721,13 +10721,33 @@ document.querySelectorAll('.addMemberBtn').forEach(function (btn) {
   btn.addEventListener('click', function () {
     var orgName = btn.dataset.name;
     var orgId = btn.dataset.id;
-    memberTitle.innerText = "Ajouter un membre à " + orgName;
+    memberTitle.innerText = "Voir les membres de " + orgName;
     addMemberForm.action = "/organizations/".concat(orgId, "/members");
     memberModal.classList.remove('hidden');
   });
 });
 closeMemberBtn.addEventListener('click', function () {
   memberModal.classList.add('hidden');
+});
+
+// Modal modifier organization
+var editOrgModal = document.getElementById('editOrgModal');
+var editOrgTitle = document.getElementById('editOrgModalTitle');
+var editOrgNameField = document.getElementById('editOrgNameField');
+var editOrgForm = document.getElementById('editOrgForm');
+var closeEditOrgModal = document.getElementById('closeEditOrgModal');
+document.querySelectorAll('.editOrgBtn').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var orgName = btn.dataset.name;
+    var orgId = btn.dataset.id;
+    editOrgTitle.innerText = "Modifier le nom";
+    editOrgNameField.value = orgName;
+    editOrgForm.action = "/organizations/".concat(orgId);
+    editOrgModal.classList.remove('hidden');
+  });
+});
+closeEditOrgModal.addEventListener('click', function () {
+  editOrgModal.classList.add('hidden');
 });
 
 /***/ })

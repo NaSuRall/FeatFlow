@@ -6,4 +6,4 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-import './dashboard/dashboard';
+import './organization/organization';
