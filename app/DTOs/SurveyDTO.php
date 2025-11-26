@@ -21,7 +21,7 @@ final class SurveyDTO
     public static function fromRequest(Request $request, ?Survey $survey = null): self
     {
         return new self(
-            organization_id: $request->input('organization_id', $survey?->organization_id),
+            organization_id: 1,
             user_id: $request->user()->id,
             title: $request->input('title', $survey?->title),
             description: $request->input('description', $survey?->description),

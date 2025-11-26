@@ -12,7 +12,6 @@
     <form method="post" action="{{ route('survey.store') }}">
         @csrf
         <div>
-            <input type="hidden" name="organization_id" value="1">
             <input type="text" placeholder="Entrer le titre du sondage" id="title" name="title">
             <input type="text" placeholder="Entrer la description" id="description" name="description">
             <label for="start_date">Entrez la date de début</label>
