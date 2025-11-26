@@ -20,20 +20,19 @@ use Illuminate\Support\Carbon;
 
 class SurveyController extends Controller
 {
-    // Affiche les sondages appartenant à l'utilisateur connecté
-    public function index(){
-        $surveys = Survey::where('user_id', auth()->id())->get();
-        return view('surveyForm', compact('surveys'));
-    }
+    //test
 
-    // Crée un sondage
-    public function store(StoreSurveyRequest $request, StoreSurveyAction $survey){
+    public function index($organization_id){
+        $surveys = Survey::where('organization_id', $organization_id)->get();
+        return view('surveyForm', compact('surveys', 'organization_id'));
+    }
+    public function store(StoreSurveyRequest $request, StoreSurveyAction $survey,){
         $dto = SurveyDTO::fromRequest($request);
         $data = $survey->execute($dto);
 
         $publicLink = url("/survey/{$data->token}");
 
-        return redirect()->route('survey.index')
+        return redirect()->route('survey.index', $data->organization_id)
         ->with('success', 'Sondage créé avec succès')
         ->with('public_link', $publicLink);
     }
@@ -44,7 +43,7 @@ class SurveyController extends Controller
         $dto = SurveyDTO::fromRequest($request, $survey);
         $data = $action->execute($dto, $survey);
 
-        return redirect()->route('survey.index')
+        return redirect()->route('survey.index', $data->organization_id)
             ->with('success', 'Sondage mis à jour avec succès');
     }
 
@@ -52,8 +51,7 @@ class SurveyController extends Controller
     public function delete(DeleteSurveyRequest $request, Survey $survey, CloseSurveyAction $action)
     {
         $action->execute($survey);
-        return redirect()->route('survey.index')
-            ->with('success', 'Sondage supprimé avec succès');
+        return redirect()->back();
     }
 
 

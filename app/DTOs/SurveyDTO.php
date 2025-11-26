@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 final class SurveyDTO
 {
-    public function __construct(
+    private function __construct(
         public ?string $organization_id,
         public ?string $token,
         public ?int $user_id,
@@ -22,8 +22,8 @@ final class SurveyDTO
     public static function fromRequest(Request $request, ?Survey $survey = null): self
     {
         return new self(
-            organization_id: $request -> organization_id,
-            token: $request -> token,   
+            organization_id: $request->get('organization_id'),
+            token: $request -> token,
             user_id: $request->user()->id,
             title: $request->input('title', $survey?->title),
             description: $request->input('description', $survey?->description),

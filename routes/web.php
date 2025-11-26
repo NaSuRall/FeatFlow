@@ -38,8 +38,7 @@ Route::middleware('auth')->group(function () {
 
 });
 
-// Routes pour la gestion des sondages
-Route::get('/survey', [SurveyController::class, 'index'])->name('survey.index');
+Route::get('/survey/{organization}', [SurveyController::class, 'index'])->name('survey.index');
 Route::post('/survey', [SurveyController::class, 'store'])->name('survey.store');
 Route::put('/survey/update/{survey}', [SurveyController::class, 'update'])->name('survey.update');
 Route::delete('/survey/delete/{survey}', [SurveyController::class, 'delete'])->name('survey.delete');

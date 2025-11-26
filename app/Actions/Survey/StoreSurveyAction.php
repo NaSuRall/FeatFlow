@@ -22,6 +22,7 @@ final class StoreSurveyAction
     }
 
     public function execute(SurveyDTO $dto): Survey{
+
         $survey = Survey::create([
             'organization_id' => 1,
             'user_id' => $dto->user_id,
@@ -32,6 +33,7 @@ final class StoreSurveyAction
             'is_anonymous' => $dto->is_anonymous,
             'token' => Str::uuid()->toString(),
         ]);
+
         return $survey;
     }
 }
