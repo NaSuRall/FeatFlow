@@ -41,13 +41,14 @@ Route::post('/survey', [SurveyController::class, 'store'])->name('survey.store')
 Route::put('/survey/update/{survey}', [SurveyController::class, 'update'])->name('survey.update');
 Route::delete('/survey/delete/{survey}', [SurveyController::class, 'delete'])->name('survey.delete');
 
+Route::get('/survey/{token}', [SurveyController::class, 'show'])->name('survey.show');
+
+
 
 Route::get('/survey/answer', [App\Http\Controllers\SurveyController::class, 'getForms'])->name('storeAnswer.show');
 Route::post('/survey/answer', [App\Http\Controllers\SurveyController::class, 'storeAnswer'])->name('storeAnswer.store');
 
 Route::get('/question/{survey_id}', [App\Http\Controllers\SurveyController::class, 'indexQuestions'])->name('storeQuestion.show');
 Route::post('/question', [App\Http\Controllers\SurveyController::class, 'storeQuestion'])->name('question.store');
-
-Route::get('/survey/{token}', [SurveyController::class, 'show'])->name('survey.show');
 
 require __DIR__.'/auth.php';

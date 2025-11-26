@@ -11,7 +11,6 @@ use App\DTOs\SurveyQuestionDTO;
 use App\Http\Requests\Survey\DeleteSurveyRequest;
 use App\Http\Requests\Survey\StoreSurveyRequest;
 use App\Http\Requests\Survey\UpdateSurveyRequest;
-use App\Models\Survey;
 use Illuminate\Http\Request;
 use App\Models\SurveyQuestion;
 use App\Actions\Survey\StoreSurveyAnswerAction;
@@ -30,7 +29,12 @@ class SurveyController extends Controller
     public function store(StoreSurveyRequest $request, StoreSurveyAction $survey){
         $dto = SurveyDTO::fromRequest($request);
         $data = $survey->execute($dto);
-        return redirect()->route('survey.index', $data);
+
+        $publicLink = url("/survey/{$data->token}");
+
+        return redirect()->route('survey.index')
+        ->with('success', 'Sondage créé avec succès')
+        ->with('public_link', $publicLink);
     }
 // UpdateSurveyRequest
     public function update(UpdateSurveyRequest $request, UpdateSurveyAction $action, Survey $survey)
@@ -74,5 +78,19 @@ class SurveyController extends Controller
         $data = $action->execute($dto);
 
         return view('questionForm');
+    }
+
+    public function show(string $token)
+    {
+        $survey = Survey::where('token', $token)->firstOrFail();
+
+        $now = now();
+        if ($survey->start_date > $now || $survey->end_date < $now) {
+            abort(403, 'Ce sondage n’est pas actif.');
+        }
+
+        return view('survey.show', [
+            'survey' => $survey
+        ]);
     }
 }
