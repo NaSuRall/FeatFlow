@@ -27,10 +27,7 @@ class SurveyController extends Controller
     public function store(StoreSurveyRequest $request, StoreSurveyAction $survey){
         $dto = SurveyDTO::fromRequest($request);
         $data = $survey->execute($dto);
-        return response()->json([
-            'message' => 'Success',
-            'data' => $data
-        ], 202);
+        return redirect()->route('survey.index', $data);
     }
 // UpdateSurveyRequest
     public function update(UpdateSurveyRequest $request, UpdateSurveyAction $action, Survey $survey)
