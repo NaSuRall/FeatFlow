@@ -29,10 +29,8 @@
                             </div>
 
                             <div>
-                                <button
-                                    type="submit"
-                                    class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
-                                >
+                                <button type="submit" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+>
                                     Créer
                                 </button>
                             </div>
