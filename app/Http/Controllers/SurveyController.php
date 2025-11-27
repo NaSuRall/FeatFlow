@@ -68,7 +68,7 @@ class SurveyController extends Controller
 
 
     //save a response
-    public function storeAnswer(StoreSurveyAnswerRequest $request, StoreSurveyAnswerAction $action)
+    public function storeAnswer(Request $request, StoreSurveyAnswerAction $action)
     {
        $dto = SurveyAnswerDTO::fromRequest($request);
        $articles = $action->execute($dto);

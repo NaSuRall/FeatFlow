@@ -29,7 +29,7 @@ class OrganizationController extends Controller
     {
 
         $dto = OrganizationDTO::fromRequest($request);
-        $organization = $action->handle($dto);
+        $organization = $action->execute($dto);
 
         return redirect()->route('organization.index');
     }

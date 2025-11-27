@@ -17,22 +17,27 @@ final class StoreOrganizationAction
     public function handle(OrganizationDTO $dto): array
     {
         return DB::transaction(function () use ($dto) {
-            $organization = Organization::create([
-                'name' => $dto->name,
-                'user_id' => $dto->userId,
-            ]);
-
-            $organization->users()->attach($dto->userId, [
-                'role' => 'admin',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-
-
-            return [
-                'organization' => $organization,
-                'message' => 'Organisation créée !',
-            ];
         });
     }
+
+    public function execute(OrganizationDTO $dto): array
+    {
+        $organization = Organization::create([
+            'name' => $dto->name,
+            'user_id' => $dto->userId,
+        ]);
+
+        $organization->users()->attach($dto->userId, [
+            'role' => 'admin',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+
+        return [
+            'organization' => $organization,
+            'message' => 'Organisation créée !',
+        ];
+    }
+
 }

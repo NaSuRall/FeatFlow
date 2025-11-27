@@ -19,48 +19,38 @@
                         $options = json_decode($question->options, true);
                     @endphp
 
-                    <div style="margin-bottom: 15px;">
+                    <div>
                         <label><strong>{{ $question->title }}</strong></label>
 
                         <input type="hidden" name="survey_question_id[]" value="{{ $question->id }}">
 
                         @if ($question->question_type === "radio")
-                            @if (!empty($options))
-                                @foreach ($options as $key => $value)
-                                    <div>
-                                        <input type="radio"
-                                               name="reponse_{{ $question->id }}"
-                                               id="radio_{{ $question->id }}_{{ $key }}"
-                                               value="{{ $value }}">
-                                        <label for="radio_{{ $question->id }}_{{ $key }}">
-                                            {{ $value }}
-                                        </label>
-                                    </div>
-                                @endforeach
-                            @else
-                                <p style="color:red;">⚠ Aucune option disponible</p>
-                            @endif
+                            @foreach ($options as $key => $value)
+                                <div>
+                                    <input type="radio"
+                                           name="answers[{{ $question->id }}]"
+                                           id="radio_{{ $question->id }}_{{ $key }}"
+                                           value="{{ $value }}">
+                                    <label for="radio_{{ $question->id }}_{{ $key }}">
+                                        {{ $value }}
+                                    </label>
+                                </div>
+                            @endforeach
 
                         @elseif ($question->question_type === "checkbox")
-                            @if (!empty($options))
-                                @foreach ($options as $key => $value)
-                                    <div>
-                                        <input type="checkbox"
-                                               name="reponse_{{ $question->id }}[]"
-                                               id="checkbox_{{ $question->id }}_{{ $key }}"
-                                               value="{{ $value }}">
-                                        <label for="checkbox_{{ $question->id }}_{{ $key }}">
-                                            {{ $value }}
-                                        </label>
-                                    </div>
-                                @endforeach
-                            @else
-                                <p style="color:red;">⚠ Aucune option disponible</p>
-                            @endif
-
-                        @else
-                            <p>Pas de questions disponible</p>
+                            @foreach ($options as $key => $value)
+                                <div>
+                                    <input type="checkbox"
+                                           name="answers[{{ $question->id }}][]"
+                                           id="checkbox_{{ $question->id }}_{{ $key }}"
+                                           value="{{ $value }}">
+                                    <label for="checkbox_{{ $question->id }}_{{ $key }}">
+                                        {{ $value }}
+                                    </label>
+                                </div>
+                            @endforeach
                         @endif
+
 
                     </div>
                 @endforeach
