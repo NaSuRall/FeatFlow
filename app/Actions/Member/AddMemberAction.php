@@ -10,7 +10,6 @@ final class AddMemberAction
 {
     public function execute(MemberDTO $dto): OrganizationUser{
 
-        //create un survey in db
         $organizationUser = OrganizationUser::create([
             'organization_id' => $dto->organization_id,
             'user_id' => $dto->user_id,

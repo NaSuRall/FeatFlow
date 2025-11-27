@@ -27,7 +27,6 @@ final class StoreOrganizationAction
             'updated_at' => now(),
         ]);
 
-
         return [
             'organization' => $organization,
             'message' => 'Organisation créée !',

@@ -12,7 +12,6 @@ final class OrganizationDTO
         public ?string $name,
     ){}
 
-    //DTO pour create
     public static function fromRequest(Request $request): self
     {
         return new self(
@@ -20,5 +19,4 @@ final class OrganizationDTO
             name: $request->input('name'),
         );
     }
-
 }

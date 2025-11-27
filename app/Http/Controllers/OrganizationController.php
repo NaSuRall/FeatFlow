@@ -14,7 +14,6 @@ use App\Models\User;
 
 class OrganizationController extends Controller
 {
-
     //Afficher les organization du user
     public function index()
     {

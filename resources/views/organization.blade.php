@@ -7,6 +7,7 @@
                     <div class="mt-6">
                         <h3 class="text-lg font-semibold mb-2">Créer une organisation</h3>
 
+                        <!-- Form pour créer une organization en entrant le nom -->
                         <form action="{{ route('organizations.store') }}" method="POST" class="space-y-4">
                             @csrf
 
@@ -37,9 +38,9 @@
                             </div>
                         </form>
 
+                        <!-- Permet d'afficher toutes les organizations du user connecté -->
                         <div class="mt-10">
                             <h3 class="text-lg font-semibold mb-3">Liste des organisations</h3>
-
                             @isset($organizations)
                                 @if($organizations->isEmpty())
                                     <p class="text-gray-500">Aucune organisation trouvée.</p>
@@ -49,8 +50,9 @@
                                             session()->put($organization->id)
                                         @endphp
                                         <div class="p-3 border rounded mb-3 flex items-center justify-between">
-                                                <p>{{$organization->id}}</p>
                                             <div class="flex space-x-2">
+
+                                                <!-- Bouton modifier dans organization pour modifier nom de l'organization -->
                                                 <form action="{{ route('organizations.update', $organization->id) }}" method="POST" class="flex items-center space-x-2 flex-1">
                                                     @csrf
                                                     @method('PUT')
@@ -60,15 +62,17 @@
                                                     </button>
                                                 </form>
 
-                                                <a href="/survey/{{ $organization->id }}" class="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400 openOrgBtn"
-                                                        data-name="{{ $organization->name }}" data-id="{{ $organization->id }}">
+                                                <!-- Bouton ouvrir dans organization pour créer un sondage -->
+                                                <a href="/survey/{{ $organization->id }}" class="px-3 py-1 bg-gray-300 rounded hover:bg-gray-400 openOrgBtn">
                                                     Ouvrir
                                                 </a>
 
+                                                <!-- Bouton membre dans organization pour afficher les membres du sondage et en ajouter -->
                                                 <a href="{{ route('organizations.members.show', $organization->id ) }}" class="bg-gray-300 px-3 py-1 rounded hover:bg-gray-400 addMemberBtn">
-                                                    Ajouter membre
+                                                    Membre
                                                 </a>
 
+                                                <!-- Bouton supprimer dans organization pour supprimer l'organization -->
                                                 <form action="{{ route('organizations.destroy', $organization->id) }}" method="POST"
                                                       onsubmit="return confirm('Voulez-vous vraiment supprimer cette organisation ?');">
                                                     @csrf
@@ -88,20 +92,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Modal ouvrir organization -->
-    <div id="orgModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-        <div class="bg-white rounded-lg p-6 w-96">
-            <h3 class="text-lg font-semibold mb-4" id="orgModalTitle">Organisation</h3>
-            <p id="orgModalContent">Contenu</p>
-
-            <div class="mt-4 text-right">
-                <button id="closeOrgModal" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
-                    Fermer
-                </button>
-            </div>
-        </div>
-    </div>
-
-
 @endsection

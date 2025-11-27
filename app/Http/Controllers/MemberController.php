@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
+    //Ajouter membre a une organization
     public function addMember(Request $request, AddMemberAction $action)
     {
         $dto = MemberDTO::fromRequest($request);
@@ -21,11 +22,10 @@ class MemberController extends Controller
         return redirect()->back();
     }
 
-    public function showMember(Organization $organization){
-
-        $usersMember = OrganizationUser::where('organization_id', $organization->id)
-            ->get();
-
+    //Voir les membre de l'organization 
+    public function showMember(Organization $organization)
+    {
+        $usersMember = OrganizationUser::where('organization_id', $organization->id)>get();
         $users = User::whereNotIn('id', $usersMember->pluck('user_id'))->get();
         return view('members.show', compact('organization', 'users', 'usersMember'));
     }

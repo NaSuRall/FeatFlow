@@ -17,7 +17,6 @@ final class MemberDTO
     )
     {}
 
-    // Ajouter un membre
     public static function fromRequest(Request $request): self
     {
         return new self(
