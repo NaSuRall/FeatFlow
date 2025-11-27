@@ -6,7 +6,9 @@ use App\Actions\Survey\CloseSurveyAction;
 use App\Actions\Survey\StoreSurveyAction;
 use App\Actions\Survey\StoreSurveyQuestionAction;
 use App\Actions\Survey\UpdateSurveyAction;
+use App\Actions\Survey\GenerateSurveyReportAction;
 use App\DTOs\SurveyDTO;
+use App\DTOs\SurveyReportDTO;
 use App\DTOs\SurveyQuestionDTO;
 use App\Http\Requests\Survey\DeleteSurveyRequest;
 use App\Http\Requests\Survey\StoreSurveyAnswerRequest;
@@ -19,9 +21,12 @@ use App\Models\SurveyQuestion;
 use App\Actions\Survey\StoreSurveyAnswerAction;
 use App\DTOs\SurveyAnswerDTO;
 use Illuminate\Support\Carbon;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 
 class SurveyController extends Controller
 {
+    use AuthorizesRequests;
 
     //show the survey creation page with the associated organization in url
     public function index(Organization $organization){
@@ -98,4 +103,16 @@ class SurveyController extends Controller
 
         return view('questionForm');
     }
+
+
+    // report result
+    public function report(Survey $survey, GenerateSurveyReportAction $action)
+    {
+        $this->authorize('viewReport', $survey);
+
+        $report = $action->execute($survey);
+
+        return view('survey.report', compact('survey', 'report'));
+    }
+
 }

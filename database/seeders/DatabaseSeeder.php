@@ -32,6 +32,23 @@ class DatabaseSeeder extends Seeder
             'password'   => bcrypt('password'),
         ]);
 
+        $user = User::firstOrCreate([
+            'email' => 'michael@feedflow.joly',
+        ],[
+            'last_name'  => 'Joly',
+            'first_name' => 'Michael',
+            'password'   => bcrypt('password'),
+        ]);
+
+        $user = User::firstOrCreate([
+            'email' => 'delphine@feedflow.garnier',
+        ],[
+            'last_name'  => 'Garnier',
+            'first_name' => 'Delphine',
+            'password'   => bcrypt('password'),
+        ]);
+
+
         // 2. Organization
         $organization = Organization::firstOrCreate([
             'name'       => 'Acme Corporation',
@@ -54,40 +71,102 @@ class DatabaseSeeder extends Seeder
             'updated_at'      => now(),
         ]);
 
+        // 4. Questions
         DB::table('survey_questions')->insert([
             'survey_id'   => $survey->id,
-            'title'       => 'test',
+            'title'       => 'Question 1',
             'question_type' => 'text',
             'options'     => json_encode([
-                'question1' => 'vert',
-                'question2' => 'blue',
-                'question3' => 'jaune',
+                'question1' => 'réponse 1',
+                'question2' => 'réponse 2',
+                'question3' => 'réponse 3',
             ]),
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
+        DB::table('survey_questions')->insert([
+            [
+                'survey_id'    => $survey->id,
+                'title'        => 'Question 2',
+                'question_type'=> 'radio',
+                'options'      => json_encode([
+                    'réponse 1',
+                    'réponse 2',
+                    'réponse 3',
+                ]),
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
+            [
+                'survey_id'    => $survey->id,
+                'title'        => 'Question 3',
+                'question_type'=> 'checkbox',
+                'options'      => json_encode([
+                    'réponse 1',
+                    'réponse 2',
+                    'réponse 3',
+                ]),
+                'created_at'   => now(),
+                'updated_at'   => now(),
+            ],
+        ]);
+
+        // 4. Answers
         DB::table('survey_answers')->insert([
             'survey_id' => $survey->id,
             'survey_question_id' => 1,
             'user_id' => 1,
-            'answer' => 'vert',
+            'answer' => 'réponse 1',
             'created_at'      => now(),
             'updated_at'      => now(),
         ]);
 
-        User::create([
-            'last_name'     => 'Jack',
-            'first_name'    => 'John',
-            'email'         => 'testtt@feedflowfddffd.lfdfdocal',
-            'password'      => bcrypt('password'),
-        ]);
 
-        User::create([
-            'last_name'     => 'Michael',
-            'first_name'    => 'Joly',
-            'email'         => 'testttt@feedflbcvbow.lofdhbnncal',
-            'password'      => bcrypt('password1'),
+        DB::table('survey_answers')->insert([
+            // Question 1 (text) existante
+            [
+                'survey_id'            => $survey->id,
+                'survey_question_id'   => 1,
+                'user_id'              => 2,
+                'answer'               => 'réponse 2',
+                'created_at'           => now(),
+                'updated_at'           => now(),
+            ],
+            // Question 2 (radio)
+            [
+                'survey_id'            => $survey->id,
+                'survey_question_id'   => 2,
+                'user_id'              => 1,
+                'answer'               => 'réponse 1',
+                'created_at'           => now(),
+                'updated_at'           => now(),
+            ],
+            [
+                'survey_id'            => $survey->id,
+                'survey_question_id'   => 2,
+                'user_id'              => null, // anonyme
+                'answer'               => 'réponse 3',
+                'created_at'           => now(),
+                'updated_at'           => now(),
+            ],
+            // Question 3 (checkbox)
+            [
+                'survey_id'            => $survey->id,
+                'survey_question_id'   => 3,
+                'user_id'              => 2,
+                'answer'               => 'réponse 1,réponse 2',
+                'created_at'           => now(),
+                'updated_at'           => now(),
+            ],
+            [
+                'survey_id'            => $survey->id,
+                'survey_question_id'   => 3,
+                'user_id'              => 3,
+                'answer'               => 'réponse 2,réponse 3',
+                'created_at'           => now(),
+                'updated_at'           => now(),
+            ],
         ]);
 
     }

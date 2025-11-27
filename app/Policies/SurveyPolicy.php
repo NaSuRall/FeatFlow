@@ -24,6 +24,11 @@ class SurveyPolicy
         return false;
     }
 
+     public function viewReport(User $user, Survey $survey): bool
+    {
+        return $user->id === $survey->user_id;
+    }
+
     /**
      * Determine whether the user can create models.
      */
