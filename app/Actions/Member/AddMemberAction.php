@@ -3,18 +3,20 @@
 namespace App\Actions\Member;
 
 use App\DTOs\MemberDTO;
-use Illuminate\Support\Facades\DB;
+use App\Models\OrganizationUser;
+
 
 final class AddMemberAction
 {
-    public function handle(MemberDTO $dto)
-    {
-        return DB::transaction(function () use ($dto) {
-            $dto->organization->users()->attach($dto->userId, [
-                'role' => $dto->role,
-                'created_at' => now(),
-                'updated_at' => now()
-            ]);
-        });
+    public function execute(MemberDTO $dto): OrganizationUser{
+
+        //create un survey in db
+        $organizationUser = OrganizationUser::create([
+            'organization_id' => $dto->organization_id,
+            'user_id' => $dto->user_id,
+            'role' => $dto->role,
+        ]);
+
+        return $organizationUser;
     }
 }

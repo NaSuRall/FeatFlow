@@ -21,6 +21,7 @@
                                     required
                                     class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                                 >
+                                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                                 @error('name')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
@@ -64,10 +65,9 @@
                                                     Ouvrir
                                                 </a>
 
-                                                <button class="bg-gray-300 px-3 py-1 rounded hover:bg-gray-400 addMemberBtn"
-                                                        data-name="{{ $organization->name }}" data-id="{{ $organization->id }}">
+                                                <a href="{{ route('organizations.members.show', $organization->id ) }}" class="bg-gray-300 px-3 py-1 rounded hover:bg-gray-400 addMemberBtn">
                                                     Ajouter membre
-                                                </button>
+                                                </a>
 
                                                 <form action="{{ route('organizations.destroy', $organization->id) }}" method="POST"
                                                       onsubmit="return confirm('Voulez-vous vraiment supprimer cette organisation ?');">
@@ -103,24 +103,5 @@
         </div>
     </div>
 
-    <!-- Modal ajouter membre -->
-    <div id="memberModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-        <div class="bg-gray-200 rounded-lg p-6 w-1/2 max-w-lg">
-            <h3 class="text-xl font-bold mb-4" id="memberModalTitle">Ajouter</h3>
 
-            <form id="addMemberForm" method="POST">
-                @csrf
-                <select name="user_id" class="border rounded w-full p-2 mb-4 text-black">
-                    @foreach($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->first_name }}</option>
-                    @endforeach
-                </select>
-
-                <div class="flex justify-end space-x-2">
-                    <button type="submit" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Ajouter</button>
-                    <button type="button" id="closeMemberModal" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Fermer</button>
-                </div>
-            </form>
-        </div>
-    </div>
 @endsection
