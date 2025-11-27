@@ -27,7 +27,6 @@ class OrganizationController extends Controller
     //Créer une organization
     public function store(StoreOrganizationRequest $request, StoreOrganizationAction $action)
     {
-
         $dto = OrganizationDTO::fromRequest($request);
         $organization = $action->execute($dto);
 
@@ -36,10 +35,10 @@ class OrganizationController extends Controller
 
     //Supprimer une organization
     public function destroy(DeleteOrganizationRequest $request, Organization $organization, DeleteOrganizationAction $action)
-    {
-        $dto = OrganizationDTO::fromOrganization($organization, $request->user()->id);
+{
+        $dto = OrganizationDTO::fromRequest($request);
 
-        $result = $action->handle($dto);
+        $action->handle($dto, $organization->id);
 
         return redirect()->route('organization.index');
     }
@@ -47,9 +46,9 @@ class OrganizationController extends Controller
     //Mettre a jour une organization
     public function update(UpdateOrganizationRequest $request, Organization $organization, UpdateOrganizationAction $action)
     {
-        $dto = OrganizationDTO::fromUpdateRequest($request, $organization);
+        $dto = OrganizationDTO::fromRequest($request);
 
-        $result = $action->handle($dto);
+        $action->handle($dto, $organization->id);
 
         return redirect()->route('organization.index');
     }

@@ -7,44 +7,18 @@ use App\Models\Organization;
 
 final class OrganizationDTO
 {
-    public ?string $name;
-    public int $userId;
-    public ?Organization $organization;
-
-
-    private function __construct(?string $name, int $userId, ?Organization $organization = null)
-    {
-        $this->name = $name;
-        $this->userId = $userId;
-        $this->organization = $organization;
-    }
+    private function __construct(
+        public ?int $user_id,
+        public ?string $name,
+    ){}
 
     //DTO pour create
     public static function fromRequest(Request $request): self
     {
         return new self(
-            $request->input('name'),
-            $request->user()->id
+            user_id: $request->input('user_id'),
+            name: $request->input('name'),
         );
     }
 
-    //DTO pour delete
-    public static function fromOrganization(Organization $organization, int $userId): self
-    {
-        return new self(
-            name: null,
-            userId: $userId,
-            organization: $organization
-        );
-    }
-
-    //DTO pour udpdate
-    public static function fromUpdateRequest(Request $request, Organization $organization): self
-    {
-        return new self(
-            $request->input('name'),
-            $request->user()->id,
-            $organization
-        );
-    }
 }

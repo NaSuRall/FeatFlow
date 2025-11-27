@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   app:
     build:
@@ -7,6 +9,20 @@ services:
     working_dir: /var/www
     volumes:
       - .:/var/www
+    depends_on:
+      - db
+      - mailpit
+    networks:
+      - feedflow
+
+  scheduler:
+    build:
+      context: .          
+      dockerfile: docker/Dockerfile
+    volumes:
+      - .:/var/www
+    working_dir: /var/www
+    command: php artisan schedule:work
     depends_on:
       - db
       - mailpit

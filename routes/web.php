@@ -18,7 +18,6 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
 
-
     // Routes pour la gestion du profil utilisateur
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -28,11 +27,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/organization', [OrganizationController::class, 'index'])->name('organization.index');
     Route::get('/organizations/create', [OrganizationController::class, 'create'])->name('organizations.create');
     Route::post('/organizations', [OrganizationController::class, 'store'])->name('organizations.store');
-    Route::delete('/organizations/{organization}', [OrganizationController::class, 'destroy'])->name('organizations.destroy')->middleware(['auth']);
-    Route::put('/organizations/{organization}', [OrganizationController::class, 'update'])->name('organizations.update')->middleware(['auth']);
+    Route::delete('/organizations/{organization}', [OrganizationController::class, 'destroy'])->name('organizations.destroy');
+    Route::put('/organizations/{organization}', [OrganizationController::class, 'update'])->name('organizations.update');
 
     // Routes pour la gestion des membres d'une organisation
-    Route::post('/organizations/{organization}/members', [MemberController::class, 'addMember'])->name('organizations.members.add');
+    Route::get('/organizations/member/{organization}', [MemberController::class, 'showMember'])->name('organizations.members.show');
+    Route::post('/organizations/member', [MemberController::class, 'addMember'])->name('organizations.members.add');
     Route::delete('/organizations/{organization}/members', [MemberController::class, 'deleteMember'])->name('organizations.members.delete');
 
 
