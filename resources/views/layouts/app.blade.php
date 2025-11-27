@@ -36,7 +36,7 @@
 
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
-        <script>
+        <!-- <script>
             const selectType = document.getElementById('question_type');
             const answersForm = document.getElementById('answers-form');
             const radioOptions = document.getElementById('radio-options');
@@ -61,7 +61,7 @@
                     textOption.style.display = 'block';
                 }
             });
-        </script>
+        </script> -->
 
     </body>
 </html>
