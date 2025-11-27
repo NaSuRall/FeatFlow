@@ -22,10 +22,11 @@ class StoreSurveyQuestionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'survey_id' => 'required',
-            'title' => 'string|required',
-            'question_type' => 'string|required',
-            'options'=>'array|required',
+            'survey_id' => 'required|exists:surveys,id',
+            'title' => 'required|string',
+            'question_type' => 'required|string',
+            'options' => 'required|array',
+            'options.*' => 'required|string',
         ];
     }
 
