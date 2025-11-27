@@ -25,7 +25,7 @@ class MemberController extends Controller
     //Voir les membre de l'organization 
     public function showMember(Organization $organization)
     {
-        $usersMember = OrganizationUser::where('organization_id', $organization->id)>get();
+        $usersMember = OrganizationUser::where('organization_id', $organization->id)->get();
         $users = User::whereNotIn('id', $usersMember->pluck('user_id'))->get();
         return view('members.show', compact('organization', 'users', 'usersMember'));
     }
