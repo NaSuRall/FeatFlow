@@ -17,17 +17,17 @@ final class StoreSurveyAnswerAction
      */
 
     public function execute(SurveyAnswerDTO $dto): SurveyAnswer {
-        
-    // Crée la reponse du sondage
+
+    //make the survey's response
     $answeredQuestions = SurveyAnswer::create([
         'survey_id' => $dto->survey_id,
         'survey_question_id' => $dto->survey_question_id,
         'answer' => is_array($dto->answers) ? join(', ', $dto->answers) : $dto->answers,
         'user_id' => $dto->user_id,
-    ]);    
-    // dire a l'admin qu'une reponse a ete soumise
+    ]);
+    //notify the admin that a response has been submitted
     event(new \App\Events\SurveyAnswerSubmitted($answeredQuestions));
-    
+
     return $answeredQuestions;
     }
 }

@@ -3,6 +3,7 @@
 @section('content')
 
     @if(session('success'))
+        <!-- show if a survey is create -->
         <div style="color: green; padding: 10px; margin: 10px 0; border: 1px solid green;">
             {{ session('success') }}
         </div>
@@ -12,6 +13,7 @@
     <form method="post" action="{{ route('survey.store') }}">
         @csrf
         <div>
+            <!-- retrieve the organization id saved in the user session -->
             <input type="hidden" name="organization_id" value="{{ session('organization_id')  }}">
             <input type="text" placeholder="Entrer le titre du sondage" id="title" name="title">
             <input type="text" placeholder="Entrer la description" id="description" name="description">
@@ -31,7 +33,7 @@
         <div>
             <h3>Nom du sondage:{{ $survey->title }}</h3>
 
-            <!-- Lien public du sondage -->
+            <!-- survey' public link -->
             @if($survey->token)
                 <p>Lien public :
                     <a href="{{ url('/survey/answer/'.$survey->token) }}" target="_blank">
@@ -59,7 +61,7 @@
             </form>
 
             <form method="post" action="{{route('survey.delete', $survey)}}" style="display: inline;"
-                  onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce sondage ?');">
+                  onsubmit="return confirm('Êtes vous sûr de vouloir supprimer ce sondage ?');">
                 @csrf
                 @method('DELETE')
                 <button type="submit">
