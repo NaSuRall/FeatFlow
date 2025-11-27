@@ -8,6 +8,12 @@
 
             <form method="POST" action="{{ route('storeAnswer.store') }}">
 
+                @if(session('success'))
+                    <div style="color: green; padding: 10px; margin: 10px 0; border: 1px solid green;">
+                        {{ session('success') }}
+                    </div>
+                @endif
+
                 @csrf
 
                 <input type="hidden" name="survey_id" value="{{ $survey->id }}">
@@ -28,7 +34,6 @@
                                 <div>
                                     <input type="radio"
                                            name="answers[{{ $question->id }}]"
-                                           id="radio_{{ $question->id }}_{{ $key }}"
                                            value="{{ $value }}">
                                     <label for="radio_{{ $question->id }}_{{ $key }}">
                                         {{ $value }}
@@ -41,7 +46,6 @@
                                 <div>
                                     <input type="checkbox"
                                            name="answers[{{ $question->id }}][]"
-                                           id="checkbox_{{ $question->id }}_{{ $key }}"
                                            value="{{ $value }}">
                                     <label for="checkbox_{{ $question->id }}_{{ $key }}">
                                         {{ $value }}
@@ -50,11 +54,11 @@
                             @endforeach
                         @endif
 
-
                     </div>
                 @endforeach
 
                 <button type="submit">Submit</button>
+
             </form>
 
         </div>
