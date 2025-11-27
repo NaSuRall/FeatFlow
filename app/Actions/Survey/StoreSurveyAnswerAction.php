@@ -16,18 +16,28 @@ final class StoreSurveyAnswerAction
      * @return array
      */
 
-    public function execute(SurveyAnswerDTO $dto): SurveyAnswer {
-        
-    // Crée la reponse du sondage
-    $answeredQuestions = SurveyAnswer::create([
-        'survey_id' => $dto->survey_id,
-        'survey_question_id' => $dto->survey_question_id,
-        'answer' => is_array($dto->answers) ? join(', ', $dto->answers) : $dto->answers,
-        'user_id' => $dto->user_id,
-    ]);    
-    // dire a l'admin qu'une reponse a ete soumise
-    event(new \App\Events\SurveyAnswerSubmitted($answeredQuestions));
-    
-    return $answeredQuestions;
+    public function execute(SurveyAnswerDTO $dto): array
+    {
+        $answeredQuestions = [];
+
+        // On boucle sur chaque question_id
+        foreach ($dto->survey_question_id as $questionId) {
+            // On récupère la réponse correspondante par clé
+            $answer = $dto->answers[$questionId] ?? null;
+
+            $surveyAnswer = SurveyAnswer::create([
+                'survey_id'          => $dto->survey_id,
+                'survey_question_id' => $questionId,
+                'answer'             => is_array($answer) ? join(', ', $answer) : $answer,
+                'user_id'            => $dto->user_id,
+            ]);
+
+            event(new \App\Events\SurveyAnswerSubmitted($surveyAnswer));
+
+            $answeredQuestions[] = $surveyAnswer;
+        }
+
+
+        return $answeredQuestions;
     }
 }

@@ -29,7 +29,7 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main class="flex flex-col h-full w-full items-center  justify-center ">
                 @yield('content')
             </main>
         </div>
@@ -37,31 +37,32 @@
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('vendor/bladewind/js/helpers.js') }}"></script>
         <script>
-            const selectType = document.getElementById('question_type');
-            const answersForm = document.getElementById('answers-form');
-            const radioOptions = document.getElementById('radio-options');
-            const checkboxOptions = document.getElementById('checkbox-options');
-            const textOption = document.getElementById('text-option');
+            const from = document.getElementById('question_type');
+            const optionsContainer = document.getElementById('options-container');
+            const addOptionBtn = document.getElementById('add-option');
 
-            selectType.addEventListener('change', function() {
-                // afficher le bloc principal
-                answersForm.style.display = 'block';
+            from.addEventListener('change', function () {
+                if (this.value === 'text') {
+                    optionsContainer.style.display = 'none';
+                    addOptionBtn.style.display = 'none';
+                } else {
+                    optionsContainer.style.display = 'flex';
+                    addOptionBtn.style.display = 'flex';
+                }
+            });
 
-                // masquer tous les sous-formulaires
-                radioOptions.style.display = 'none';
-                checkboxOptions.style.display = 'none';
-                textOption.style.display = 'none';
-
-                // afficher celui qui correspond au choix
-                if (this.value === 'radio') {
-                    radioOptions.style.display = 'block';
-                } else if (this.value === 'checkbox') {
-                    checkboxOptions.style.display = 'block';
-                } else if (this.value === 'text') {
-                    textOption.style.display = 'block';
+            // tout ca est tres clair chef
+            addOptionBtn.addEventListener('click', function () {
+                const currentOptions = optionsContainer.querySelectorAll('input').length;
+                if (currentOptions < 5) {
+                    const newInput = document.createElement('input');
+                    newInput.type = 'text';
+                    newInput.name = 'options[]';
+                    optionsContainer.appendChild(newInput);
+                } else {
+                    alert("Vous pouvez ajouter au maximum 5 options.");
                 }
             });
         </script>
-
     </body>
 </html>

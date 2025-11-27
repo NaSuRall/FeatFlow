@@ -1,51 +1,36 @@
 @extends('layouts.app')
 @section('content')
-    <form action="{{ route('question.store') }}" method="POST">
-        @csrf
 
-        <input name="survey_id" type="hidden" value={{ $survey_id }}>
-        <input type="text" name="title">
-        <div class="mb-3">
-            <label for="question_type" class="form-label">Type de question</label>
-            <select name="question_type" id="question_type" class="form-select" required>
-                <option value="">-- Sélectionnez --</option>
-                <option value="radio">Choix unique (radio)</option>
-                <option value="checkbox">Choix multiple (checkbox)</option>
-                <option value="text">Texte libre</option>
-            </select>
-        </div>
+    <div class="flex flex-col w-1/2 min-h-screen items-center justify-center bg-gray-900 ">
+            <h1 class="text-3xl text-black">Ajouter une Question</h1>
 
-        <div id="answers-form" style="display:none;">
-            <h4>Définir les réponses possibles</h4>
+        <form action="{{ route('question.store') }}" method="POST"
+              class="flex flex-col p-6 border-2 border-black rounded-xl mt-3">
+            @csrf
+            <input name="survey_id" type="hidden" value={{ $survey_id }}>
+            <input type="text" name="title" placeholder="Titre de la question" class="form-control mb-3">
 
-            <!-- Radio -->
-            <div id="radio-options" style="display:none;">
-                <div class="mb-3">
-                    <label>Option 1</label>
-                    <input type="text" name="options[]" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label>Option 2</label>
-                    <input type="text" name="options[]" class="form-control">
-                </div>
+            <div class="mb-3">
+                <label for="question_type" class="form-label">Type de question</label>
+                <select name="question_type" id="question_type" class="form-select" required>
+                    <option value="">-- Sélectionnez --</option>
+                    <option value="radio">Choix unique (radio)</option>
+                    <option value="checkbox">Choix multiple (checkbox)</option>
+                    <option value="text">Texte libre</option>
+                </select>
             </div>
 
-            <div id="checkbox-options" style="display:none;">
-                <div class="mb-3">
-                    <label>Option 1</label>
-                    <input type="text" name="options[]" class="form-control">
-                </div>
-                <div class="mb-3">
-                    <label>Option 2</label>
-                    <input type="text" name="options[]" class="form-control">
-                </div>
+            <!-- pour les options -->
+            <div id="options-container" class="flex flex-col gap-3 mb-2">
+                <input type="text" name="options[]" class="form-control mb-2" placeholder="Option 1">
             </div>
 
-            <div id="text-option" style="display:none;">
-                <p>Pas besoin de définir des réponses, l’utilisateur saisira son texte libre.</p>
-            </div>
-        </div>
+            <!-- pour ajouter une option -->
+            <button type="button" id="add-option" class="px-6 py-2 text-black border-2 rounded-xl">Ajouter une option</button>
 
-        <button type="submit" class="btn btn-primary mt-3">Enregistrer</button>
-    </form>
+            <button type="submit" class="btn btn-primary mt-3 border-2 rounded-xl">Enregistrer</button>
+        </form>
+
+    </div>
+
 @endsection

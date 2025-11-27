@@ -10,7 +10,7 @@ final class SurveyQuestionDTO
         public int $survey_id,
         public string $title,
         public string $question_type,
-        public array $options,
+        public ?array $options,
     ) {}
 
     public static function fromRequest(Request $request, ): self
