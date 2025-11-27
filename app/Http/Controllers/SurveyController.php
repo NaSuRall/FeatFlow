@@ -12,6 +12,7 @@ use App\DTOs\SurveyReportDTO;
 use App\DTOs\SurveyQuestionDTO;
 use App\Http\Requests\Survey\DeleteSurveyRequest;
 use App\Http\Requests\Survey\StoreSurveyAnswerRequest;
+use App\Http\Requests\Survey\StoreSurveyQuestionRequest;
 use App\Http\Requests\Survey\StoreSurveyRequest;
 use App\Http\Requests\Survey\UpdateSurveyRequest;
 use App\Models\Organization;
@@ -63,7 +64,8 @@ class SurveyController extends Controller
     public function delete(DeleteSurveyRequest $request, Survey $survey, CloseSurveyAction $action)
     {
         $action->execute($survey);
-        return redirect()->back();
+        return redirect()->back()
+        ->with('success', 'question ajouté');
     }
 
 
@@ -71,9 +73,10 @@ class SurveyController extends Controller
     public function storeAnswer(Request $request, StoreSurveyAnswerAction $action)
     {
        $dto = SurveyAnswerDTO::fromRequest($request);
-       $articles = $action->execute($dto);
+       $action->execute($dto);
 
-        return response()->json("Reponse Sauvegarder avec success !");
+        return redirect()->back()
+            ->with('success', 'Sondage crée avec succès');
     }
 
 
@@ -92,16 +95,19 @@ class SurveyController extends Controller
 
     //show survey to add questions
     public function indexQuestions($survey_id){
-        $survey = Survey::where('user_id', auth()->id())->get();
+        $survey = Survey::where('id', $survey_id)
+            ->where('user_id', auth()->id())
+            ->firstOrFail();
         return view('questionForm', compact('survey', 'survey_id'));
     }
 
     // add question
-    public function storeQuestion(Request $request, StoreSurveyQuestionAction $action){
+    public function storeQuestion(StoreSurveyQuestionRequest $request, StoreSurveyQuestionAction $action){
         $dto = SurveyQuestionDTO::fromRequest($request);
         $data = $action->execute($dto);
 
-        return view('questionForm');
+        return redirect()->back()
+            ->with('success', 'question creer avec succès');
     }
 
 

@@ -1,13 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>test</h1>
 
 
     @foreach ($surveys as $survey)
         <div>
 
             <form method="POST" action="{{ route('storeAnswer.store') }}">
+
+                @if(session('success'))
+                    <div style="color: green; padding: 10px; margin: 10px 0; border: 1px solid green;">
+                        {{ session('success') }}
+                    </div>
+                @endif
 
                 @csrf
 
@@ -29,7 +34,6 @@
                                 <div>
                                     <input type="radio"
                                            name="answers[{{ $question->id }}]"
-                                           id="radio_{{ $question->id }}_{{ $key }}"
                                            value="{{ $value }}">
                                     <label for="radio_{{ $question->id }}_{{ $key }}">
                                         {{ $value }}
@@ -42,7 +46,6 @@
                                 <div>
                                     <input type="checkbox"
                                            name="answers[{{ $question->id }}][]"
-                                           id="checkbox_{{ $question->id }}_{{ $key }}"
                                            value="{{ $value }}">
                                     <label for="checkbox_{{ $question->id }}_{{ $key }}">
                                         {{ $value }}
@@ -51,11 +54,11 @@
                             @endforeach
                         @endif
 
-
                     </div>
                 @endforeach
 
                 <button type="submit">Submit</button>
+
             </form>
 
         </div>

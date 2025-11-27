@@ -25,4 +25,10 @@ class StoreSurveyAnswerRequest extends FormRequest
             'answer' => 'required|string',
         ];
     }
+
+    public function messages(): array{
+        return [
+            'answer.required' => 'Une réponse est requise',
+        ];
+    }
 }

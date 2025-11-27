@@ -4,8 +4,26 @@
     <div class="flex flex-col w-1/2 min-h-screen items-center justify-center bg-gray-900 ">
             <h1 class="text-3xl text-black">Ajouter une Question</h1>
 
+        @if ($errors->any())
+            <div class="bg-red-100 text-red-700 px-4 py-3 rounded mb-6 border border-red-300">
+                <ul class="list-disc pl-5">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <form action="{{ route('question.store') }}" method="POST"
               class="flex flex-col p-6 border-2 border-black rounded-xl mt-3">
+
+            @if(session('success'))
+                <!-- show if a survey is create -->
+                <div style="color: green; padding: 10px; margin: 10px 0; border: 1px solid green;">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             @csrf
             <input name="survey_id" type="hidden" value={{ $survey_id }}>
             <input type="text" name="title" placeholder="Titre de la question" class="form-control mb-3">
