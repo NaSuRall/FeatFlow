@@ -1,40 +1,87 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="p-6 space-y-8 bg-gray-100 min-h-screen">
-    <h1 class="text-3xl font-bold mb-8 text-center">{{ $survey->title }} — Rapport</h1>
+<div class="p-6 bg-gray-100">
+    <h1 class="text-2xl font-bold mb-8 text-center">{{ $survey->title }} — Rapport</h1>
 
-    @foreach ($report as $index => $question)
-        <div class="p-6 bg-white rounded-xl shadow-md border border-gray-200 max-w-4xl mx-auto">
-            <h2 class="text-xl font-semibold mb-4">{{ $question->question }}</h2>
-
-            @if(count($question->labels) > 0)
-                @foreach($question->labels as $i => $label)
-                    @php
-                        $total = array_sum($question->data);
-                        $count = $question->data[$i] ?? 0;
-                        $percentage = $total > 0 ? round(($count / $total) * 100) : 0;
-                    @endphp
-
-                    <div class="mb-2">
-                        <div class="flex justify-between mb-1 text-sm font-medium">
-                            <span>{{ $label }}</span>
-                            <span>{{ $percentage }}%</span>
+    <div class="max-w-4xl mx-auto mt-8">
+        <x-bladewind::accordion 
+            grouped="true" 
+            can_open_multiple="true" 
+            class="rounded-2xl"
+        >
+            @foreach($report as $index => $question)
+                <x-bladewind::accordion.item 
+                    title="{{ $question->question }} ({{ $total = array_sum($question->data) }} {{ $total === 1 ? 'réponse' : 'réponses' }})"
+                    open="false"
+                    class="bg-white"
+                >
+                    @if(count($question->labels) > 0)
+                        <div style="height: 200px; width: 200px; margin:auto;">
+                            <canvas id="chart{{ $index }}"></canvas>
                         </div>
-                        <div class="w-full bg-gray-200 rounded h-4">
-                            <div class="bg-blue-500 h-4 rounded" style="width: {{ $percentage }}%"></div>
-                        </div>
-                    </div>
-                @endforeach
-            @else
-                <p class="text-gray-500 italic">Aucune réponse pour cette question.</p>
-            @endif
-
-            {{-- Infos supplémentaires --}}
-            <div class="mt-4 flex flex-wrap text-sm text-gray-400 space-x-4">
-                <span>Réponses totales : {{ array_sum($question->data) ?? 0 }}</span>
-            </div>
-        </div>
-    @endforeach
+                    @else
+                        <p class="text-gray-500 italic">Aucune réponse pour cette question.</p>
+                    @endif
+                </x-bladewind::accordion.item>
+            @endforeach
+        </x-bladewind::accordion>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    function generateColors(n) {
+        const colors = [];
+        for (let i = 0; i < n; i++) {
+            const hue = (i * 137.508) % 360; // golden angle for distinct colors
+            colors.push(`hsl(${hue}, 65%, 60%)`);
+        }
+        return colors;
+    }
+
+    @foreach($report as $index => $question)
+        @if(count($question->labels) > 0)
+            const ctx{{ $index }} = document.getElementById('chart{{ $index }}');
+            ctx{{ $index }}.addEventListener('click', function(e){
+                e.stopPropagation();
+            });
+
+            new Chart(ctx{{ $index }}, {
+                type: 'pie',
+                data: {
+                    labels: {!! json_encode($question->labels) !!},
+                    datasets: [{
+                        data: {!! json_encode($question->data) !!},
+                        backgroundColor: generateColors({{ count($question->labels) }}),
+                        borderColor: '#fff',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 12,
+                                padding: 10
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const count = context.raw;
+                                    const word = count === 1 ? 'réponse' : 'réponses';
+                                    return context.label + ': ' + count + ' ' + word;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        @endif
+    @endforeach
+</script>
 @endsection
