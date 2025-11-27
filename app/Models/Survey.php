@@ -15,10 +15,14 @@ class Survey extends Model
     public $timestamps  = true;
     protected $fillable = [
         'id', 'token', 'organization_id', 'user_id',
-        'title', 'description', 'start_date', 'end_date', 'is_anonymous',
+        'title', 'status', 'description', 'start_date', 'end_date', 'is_anonymous',
         'created_at', 'updated_at'
     ];
     protected $casts = [
+    ];
+
+    protected $attributes = [
+        'status' => 'open',
     ];
 
    /* public function organization(): HasOne
