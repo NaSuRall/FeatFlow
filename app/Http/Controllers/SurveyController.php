@@ -37,6 +37,8 @@ class SurveyController extends Controller
         $dto = SurveyDTO::fromRequest($request);
         $data = $survey->execute($dto);
 
+        $this->authorize('create', Survey::class);
+
         $publicLink = url("/survey/answer/{$data->token}");
 
         return redirect()->route('survey.index',session('organization_id'))
@@ -49,6 +51,7 @@ class SurveyController extends Controller
     {
         $dto = SurveyDTO::fromRequest($request, $survey);
         $data = $action->execute($dto, $survey);
+        $this->authorize('update', $survey);
 
         return redirect()->route('survey.index',session('organization_id'))
             ->with('success', 'Sondage mis à jour avec succès');
@@ -58,6 +61,7 @@ class SurveyController extends Controller
     public function delete(DeleteSurveyRequest $request, Survey $survey, CloseSurveyAction $action)
     {
         $action->execute($survey);
+        $this->authorize('delete', $survey);
         return redirect()->back();
     }
 
@@ -79,6 +83,8 @@ class SurveyController extends Controller
         $survey = Survey::where('token', $token)
             ->with('questions')
             ->firstOrFail();
+
+        $this->authorize('answer', $survey);
 
         return view('survey.surveyAnswer', [
             'surveys' => [$survey]

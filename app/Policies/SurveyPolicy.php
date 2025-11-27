@@ -21,15 +21,15 @@ class SurveyPolicy
      */
     public function view(User $user, Survey $survey): bool
     {
-        return false;
+        return session('organization_id') === $survey->organization_id;
     }
 
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user, int $organizationId): bool
     {
-        return false;
+        return session('organization_id') !== null;
     }
 
     /**
@@ -37,7 +37,9 @@ class SurveyPolicy
      */
     public function update(User $user, Survey $survey): bool
     {
-        return false;
+        return
+            $survey->user_id === $user->id ||
+            session('organization_id') === $survey->organization_id;
     }
 
     /**
@@ -45,7 +47,7 @@ class SurveyPolicy
      */
     public function delete(User $user, Survey $survey): bool
     {
-        return false;
+        return $survey->user_id === $user->id;
     }
 
     /**
@@ -62,5 +64,18 @@ class SurveyPolicy
     public function forceDelete(User $user, Survey $survey): bool
     {
         return false;
+    }
+
+    public function answer(?User $user, Survey $survey): bool
+    {
+        if ($survey->is_anonymous) {
+            return true; // tout le monde
+        }
+
+        if (!$user) {
+            return false; // login nécessaire
+        }
+
+        return session('organization_id') === $survey->organization_id;
     }
 }
