@@ -71,9 +71,10 @@ class SurveyController extends Controller
     public function storeAnswer(Request $request, StoreSurveyAnswerAction $action)
     {
        $dto = SurveyAnswerDTO::fromRequest($request);
-       $articles = $action->execute($dto);
+       $action->execute($dto);
 
-        return response()->json("Reponse Sauvegarder avec success !");
+        return redirect()->back()
+            ->with('success', 'Sondage crée avec succès');
     }
 
 
@@ -101,7 +102,8 @@ class SurveyController extends Controller
         $dto = SurveyQuestionDTO::fromRequest($request);
         $data = $action->execute($dto);
 
-        return view('questionForm');
+        return redirect()->back()
+            ->with('success', 'Sondage crée avec succès');
     }
 
 

@@ -67,6 +67,8 @@
                 <button type="submit">
                     Supprimer
                 </button>
+
+
             </form>
 
             <a href="/question/{{$survey->id}}">Ajouter des questions</a>

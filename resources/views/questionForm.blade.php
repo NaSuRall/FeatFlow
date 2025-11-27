@@ -6,6 +6,14 @@
 
         <form action="{{ route('question.store') }}" method="POST"
               class="flex flex-col p-6 border-2 border-black rounded-xl mt-3">
+
+            @if(session('success'))
+                <!-- show if a survey is create -->
+                <div style="color: green; padding: 10px; margin: 10px 0; border: 1px solid green;">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             @csrf
             <input name="survey_id" type="hidden" value={{ $survey_id }}>
             <input type="text" name="title" placeholder="Titre de la question" class="form-control mb-3">
