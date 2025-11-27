@@ -8,8 +8,8 @@ use App\Models\Organization;
 final class OrganizationDTO
 {
     private function __construct(
-        public int $user_id,
-        public string $name,
+        public ?int $user_id,
+        public ?string $name,
     ){}
 
     //DTO pour create
