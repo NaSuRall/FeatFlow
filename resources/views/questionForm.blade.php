@@ -19,7 +19,6 @@
             <input type="text" name="title" placeholder="Titre de la question" class="form-control mb-3">
 
             <div class="mb-3">
-                <label for="question_type" class="form-label">Type de question</label>
                 <select name="question_type" id="question_type" class="form-select" required>
                     <option value="">-- Sélectionnez --</option>
                     <option value="radio">Choix unique (radio)</option>

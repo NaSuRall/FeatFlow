@@ -27,8 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/organization', [OrganizationController::class, 'index'])->name('organization.index');
     Route::get('/organizations/create', [OrganizationController::class, 'create'])->name('organizations.create');
     Route::post('/organizations', [OrganizationController::class, 'store'])->name('organizations.store');
-    Route::delete('/organizations/{organization}', [OrganizationController::class, 'destroy'])->name('organizations.destroy')->middleware(['auth']);
-    Route::put('/organizations/{organization}', [OrganizationController::class, 'update'])->name('organizations.update')->middleware(['auth']);
+    Route::delete('/organizations/{organization}', [OrganizationController::class, 'destroy'])->name('organizations.destroy');
+    Route::put('/organizations/{organization}', [OrganizationController::class, 'update'])->name('organizations.update');
 
     // Routes pour la gestion des membres d'une organisation
     Route::get('/organizations/member/{organization}', [MemberController::class, 'showMember'])->name('organizations.members.show');
