@@ -25,8 +25,7 @@ class StoreSurveyQuestionRequest extends FormRequest
             'survey_id' => 'required|exists:surveys,id',
             'title' => 'required|string',
             'question_type' => 'required|string',
-            'options' => 'required|array',
-            'options.*' => 'required|string',
+            'options' => 'nullable|array',
         ];
     }
 
