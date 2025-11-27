@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 w-full">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg w-full">
-                <div class="p-6 text-gray-900 w-full">
-                    <div class="mt-6 w-full">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <div class="mt-6">
                         <h3 class="text-lg font-semibold mb-2">
                             Organisation : {{ $organization->name }}
                         </h3>
