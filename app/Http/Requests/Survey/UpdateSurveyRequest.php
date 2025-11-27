@@ -24,10 +24,19 @@ class UpdateSurveyRequest extends FormRequest
     return [
         'organization_id' => 'nullable|integer',
         'title' => 'nullable|string|max:100|min:3',
-        'description' => 'nullable|string|max:250|min:10',
+        'description' => 'nullable|string|max:250|min:3',
         'start_date' => 'nullable|date',
         'end_date' => 'nullable|date',
         'is_anonymous' => 'nullable|boolean',
     ];
+    }
+
+    public function messages(): array{
+        return [
+            'title.required' => 'Un titre est requis',
+            'description.required' => 'Une description est requise',
+            'start_date'=> 'Une date de début est requise',
+            'end_date'=> 'Une date de fin est requise',
+        ];
     }
 }

@@ -28,4 +28,12 @@ class StoreSurveyQuestionRequest extends FormRequest
             'options'=>'array|required',
         ];
     }
+
+    public function messages(): array{
+        return [
+            'title.required' => 'Un titre est requis',
+            'question_type.required' => 'Un type de question est requis',
+            'options.required' => 'Des reponses a choisir sont nécessaires',
+        ];
+    }
 }

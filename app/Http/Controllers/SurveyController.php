@@ -63,7 +63,8 @@ class SurveyController extends Controller
     public function delete(DeleteSurveyRequest $request, Survey $survey, CloseSurveyAction $action)
     {
         $action->execute($survey);
-        return redirect()->back();
+        return redirect()->back()
+        ->with('success', 'Sondage supprimés avec succès');
     }
 
 

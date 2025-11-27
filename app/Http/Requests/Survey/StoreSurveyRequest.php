@@ -29,4 +29,13 @@ class StoreSurveyRequest extends FormRequest
             'is_anonymous' => 'nullable|boolean',
         ];
     }
+
+    public function messages(): array{
+        return [
+            'title.required' => 'Un titre est requis',
+            'description.required' => 'Une description est requise',
+            'start_date'=> 'Une date de début est requise',
+            'end_date'=> 'Une date de fin est requise',
+        ];
+    }
 }
