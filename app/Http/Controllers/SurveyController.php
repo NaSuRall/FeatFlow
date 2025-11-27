@@ -6,7 +6,9 @@ use App\Actions\Survey\CloseSurveyAction;
 use App\Actions\Survey\StoreSurveyAction;
 use App\Actions\Survey\StoreSurveyQuestionAction;
 use App\Actions\Survey\UpdateSurveyAction;
+use App\Actions\Survey\GenerateSurveyReportAction;
 use App\DTOs\SurveyDTO;
+use App\DTOs\SurveyReportDTO;
 use App\DTOs\SurveyQuestionDTO;
 use App\Http\Requests\Survey\DeleteSurveyRequest;
 use App\Http\Requests\Survey\StoreSurveyAnswerRequest;
@@ -19,11 +21,14 @@ use App\Models\SurveyQuestion;
 use App\Actions\Survey\StoreSurveyAnswerAction;
 use App\DTOs\SurveyAnswerDTO;
 use Illuminate\Support\Carbon;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 
 class SurveyController extends Controller
 {
-    //test
+    use AuthorizesRequests;
 
+    //show the survey creation page with the associated organization in url
     public function index(Organization $organization){
 
         session(['organization_id' => $organization->id]);
@@ -31,6 +36,8 @@ class SurveyController extends Controller
         $surveys = Survey::where('organization_id' , session('organization_id'))->get();
         return view('surveyForm', compact('surveys'));
     }
+
+    //create the survey in the database with the generated token
     public function store(StoreSurveyRequest $request, StoreSurveyAction $survey){
         $dto = SurveyDTO::fromRequest($request);
         $data = $survey->execute($dto);
@@ -42,7 +49,7 @@ class SurveyController extends Controller
         ->with('public_link', $publicLink);
     }
 
-    // Met à jour un sondage
+    //update a survey
     public function update(UpdateSurveyRequest $request, UpdateSurveyAction $action, Survey $survey)
     {
         $dto = SurveyDTO::fromRequest($request, $survey);
@@ -52,7 +59,7 @@ class SurveyController extends Controller
             ->with('success', 'Sondage mis à jour avec succès');
     }
 
-    // Supprime un sondage
+    //delete a survey
     public function delete(DeleteSurveyRequest $request, Survey $survey, CloseSurveyAction $action)
     {
         $action->execute($survey);
@@ -60,7 +67,7 @@ class SurveyController extends Controller
     }
 
 
-    // Enregistre une réponse
+    //save a response
     public function storeAnswer(Request $request, StoreSurveyAnswerAction $action)
     {
        $dto = SurveyAnswerDTO::fromRequest($request);
@@ -69,10 +76,11 @@ class SurveyController extends Controller
         return response()->json("Reponse Sauvegarder avec success !");
     }
 
-    //
+
+    //show answers so the user can respond to them
     public function getForms($token)
     {
-        // Récupérer le survey par token
+        //retrieve the survey by token
         $survey = Survey::where('token', $token)
             ->with('questions')
             ->firstOrFail();
@@ -82,13 +90,13 @@ class SurveyController extends Controller
         ]);
     }
 
-    // Affiche le formulaire pour ajouter des questions
+    //show survey to add questions
     public function indexQuestions($survey_id){
         $survey = Survey::where('user_id', auth()->id())->get();
         return view('questionForm', compact('survey', 'survey_id'));
     }
 
-    // ajouter une question
+    // add question
     public function storeQuestion(Request $request, StoreSurveyQuestionAction $action){
         $dto = SurveyQuestionDTO::fromRequest($request);
         $data = $action->execute($dto);
@@ -96,18 +104,15 @@ class SurveyController extends Controller
         return view('questionForm');
     }
 
-    // Fonction pour afficher un sondage quand on utilise le token (pour partager le sondage)
-    public function show(string $token)
+
+    // report result
+    public function report(Survey $survey, GenerateSurveyReportAction $action)
     {
-        $survey = Survey::where('token', $token)->firstOrFail();
+        $this->authorize('viewReport', $survey);
 
-        $now = now();
-        if ($survey->start_date > $now || $survey->end_date < $now) {
-            abort(403, 'Ce sondage n’est pas actif.');
-        }
+        $report = $action->execute($survey);
 
-        return view('survey.surveyAnswer', [
-            'survey' => $survey
-        ]);
+        return view('survey.report', compact('survey', 'report'));
     }
+
 }

@@ -23,6 +23,7 @@ final class StoreSurveyAction
 
     public function execute(SurveyDTO $dto): Survey{
 
+        //create un survey in db
         $survey = Survey::create([
             'organization_id' => $dto->organization_id,
             'user_id' => $dto->user_id,

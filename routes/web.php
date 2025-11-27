@@ -38,14 +38,16 @@ Route::middleware('auth')->group(function () {
 
 });
 
+// Routes pour les sondages
 Route::get('/survey/{organization}', [SurveyController::class, 'index'])->name('survey.index');
 Route::post('/survey', [SurveyController::class, 'store'])->name('survey.store');
 Route::put('/survey/update/{survey}', [SurveyController::class, 'update'])->name('survey.update');
 Route::delete('/survey/delete/{survey}', [SurveyController::class, 'delete'])->name('survey.delete');
 
-// Route pour accéder à un sondage via son token
-Route::get('/survey/answer/{token}', [SurveyController::class, 'show'])->name('survey.show');
-
+// Route pour les resultats du sondage
+Route::get('/survey/{survey}/report', [SurveyController::class, 'report'])
+    ->name('survey.report')
+    ->middleware(['auth', 'can:viewReport,survey']);
 
 // Routes pour gérer les réponses aux sondages
 Route::get('/survey/answer/{token}', [App\Http\Controllers\SurveyController::class, 'getForms'])->name('storeAnswer.show');
