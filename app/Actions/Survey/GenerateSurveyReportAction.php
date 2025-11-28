@@ -30,7 +30,7 @@ class GenerateSurveyReportAction
 
         // récupérer les participants
         if ($survey->is_anonymous) {
-            $participants = ['Sondage anonyme : aucun utilisateur identifiable.'];
+            $participants = ['Sondage anonyme'];
         } else {
             $participants = $survey->answers
                 ->pluck('user')
