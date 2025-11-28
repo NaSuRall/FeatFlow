@@ -86,8 +86,11 @@
                     @csrf
                     @method('DELETE')
                     <button class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">Supprimer</button>
-
                 </form>
+                <a href="{{ route('survey.report', $survey) }}"
+                class="ml-3 inline-block bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+                    Voir le rapport
+                </a>
                 <a href="/question/{{ $survey->id }}" class="ml-3 inline-block text-blue-600 underline">Ajouter des questions</a>
             </div>
         @endforeach
