@@ -116,9 +116,13 @@ class SurveyController extends Controller
     {
         $this->authorize('viewReport', $survey);
 
-        $report = $action->execute($survey);
+        $data = $action->execute($survey);
 
-        return view('survey.report', compact('survey', 'report'));
+        return view('survey.report', [
+            'survey'       => $survey,
+            'report'       => $data['report'],
+            'participants' => $data['participants'],
+        ]);
     }
 
 }

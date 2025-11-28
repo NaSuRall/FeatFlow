@@ -5,6 +5,13 @@
     <h1 class="text-2xl font-bold mb-8 text-center">{{ $survey->title }} — Rapport</h1>
 
     <div class="max-w-4xl mx-auto mt-8">
+        <h2 class="text-xl font-semibold mt-10 mb-4">Participants</h2>
+
+        <ul class="bg-white p-4 rounded shadow">
+            @foreach($participants as $p)
+                <li class="border-b py-2">{{ $p }}</li>
+            @endforeach
+        </ul>
         <x-bladewind::accordion 
             grouped="true" 
             can_open_multiple="true" 
