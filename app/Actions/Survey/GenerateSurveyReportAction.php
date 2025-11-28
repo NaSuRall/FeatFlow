@@ -28,7 +28,6 @@ class GenerateSurveyReportAction
             $report[] = SurveyReportDTO::fromSurveyData($question->title, $labels, $data);
         }
 
-        // récupérer les participants
         if ($survey->is_anonymous) {
             $participants = ['Sondage anonyme'];
         } else {
