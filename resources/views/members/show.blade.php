@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <div class="mt-6">
+    <div class="flex w-full items-center justify-center py-12">
+        <div class="flex items-center justify-center w-full mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white flex w-1/2 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 flex w-full items-center justify-center">
+                    <div class="mt-6 flex w-full flex-col">
                         <h3 class="text-lg font-semibold mb-2">
                             Organisation : {{ $organization->name }}
                         </h3>
@@ -32,12 +32,12 @@
 
                         <!-- Affichage des différents membres de l'organization -->
                         <div class="mt-10">
-                            <x-bladewind::accordion 
-                                grouped="false" 
-                                can_open_multiple="true" 
+                            <x-bladewind::accordion
+                                grouped="false"
+                                can_open_multiple="true"
                                 class="rounded-2xl"
                             >
-                                <x-bladewind::accordion.item 
+                                <x-bladewind::accordion.item
                                     title="Liste des membres"
                                     open="true"
                                     class="bg-white"
@@ -56,7 +56,7 @@
                                         @endforeach
                                     @endif
                                 </x-bladewind::accordion.item>
-                            </x-bladewind::accordion>    
+                            </x-bladewind::accordion>
                         </div>
                     </div>
                 </div>

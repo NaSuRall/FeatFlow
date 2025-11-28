@@ -23,7 +23,7 @@ final class StoreSurveyAnswerAction
         //  boucler sur chaque survey_question_id
         foreach ($dto->survey_question_id as $questionId) {
             // On récupère la réponse par la clé
-            $answer = $dto->answers[$questionId] ?? null;
+            $answer = $dto->answers[$questionId];
 
             $surveyAnswer = SurveyAnswer::create([
                 'survey_id'          => $dto->survey_id,
